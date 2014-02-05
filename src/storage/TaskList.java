@@ -23,7 +23,7 @@ public class TaskList {
 		createdDt = DateTime.now();
 		updatedDt = DateTime.now();
 
-		addTask(1, "floating task 2", "meeting", startdDt, endDt, createdDt,
+		addTask(1, "timed task 2", "meeting", startdDt, endDt, createdDt,
 				updatedDt, false, false, 1);
 
 		addTask(1, "task 1", "home", createdDt, updatedDt, false, false, 1);
@@ -33,7 +33,7 @@ public class TaskList {
 		addTask(1, "deadline task 5", "school", endDt, createdDt, updatedDt,
 				false, false, 2);
 
-		addTask(1, "floating task 6", "meeting", startdDt, endDt, createdDt,
+		addTask(1, "timed task 6", "meeting", startdDt, endDt, createdDt,
 				updatedDt, false, false, 1);
 
 	}
