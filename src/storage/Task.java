@@ -13,10 +13,11 @@ public class Task {
 	protected DateTime taskUpdated;
 	protected Boolean isDone;
 	protected Boolean isDeleted;
+	protected String taskType;
 
 	public Task(int taskId, String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority) {
+			boolean isDeleted, Integer priority, String taskType) {
 		setTaskId(taskId);
 		setTaskName(taskName);
 		setTaskCategory(taskCategory);
@@ -25,8 +26,18 @@ public class Task {
 		setPriority(priority);
 		setDone(isDone);
 		setDeleted(isDeleted);
+		setTaskType(taskType);
 	}
 
+	public void setTaskType(String taskType2) {
+		this.taskType = taskType2;
+		
+	}
+	
+	public String getTaskType() {
+		return taskType;
+		
+	}
 	/**
 	 * To String
 	 */
@@ -55,6 +66,9 @@ public class Task {
 		}
 		if (isDeleted != null) {
 			taskToString += "isDeleted=" + isDeleted.toString();
+		}
+		if (taskType != null) {
+			taskToString += "taskType=" + taskType;
 		}
 		return taskToString;
 	}

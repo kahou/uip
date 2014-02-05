@@ -22,7 +22,7 @@ public class DeadlineTask extends Task {
 			DateTime endDt, DateTime createdDt, DateTime updatedDt,
 			boolean isDone, boolean isDeleted, Integer priority) {
 		super(taskId, taskName, taskCategory, createdDt, updatedDt, isDone,
-				isDeleted, priority);
+				isDeleted, priority, "DeadlineTask");
 		setEndDateTime(endDt);
 	}
 
@@ -72,6 +72,9 @@ public class DeadlineTask extends Task {
 		}
 		if (isDeleted != null) {
 			taskToString += "isDeleted=" + isDeleted.toString();
+		}
+		if (taskType != null) {
+			taskToString += "taskType=" + taskType;
 		}
 		return taskToString;
 	}

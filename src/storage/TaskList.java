@@ -75,6 +75,17 @@ public class TaskList {
 
 	public void removeTask(Integer taskId) {
 
+		for (int i = 0; i < taskList.size(); i++) {
+			Task newTask;
+			newTask = taskList.get(i);
+			
+			if(newTask.getTaskId()== taskId){
+				newTask.setDeleted(true);
+			}
+
+		}
+
+	
 	}
 
 	public Task getTask(Integer taskId) {

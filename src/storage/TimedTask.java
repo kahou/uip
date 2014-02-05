@@ -26,7 +26,7 @@ public class TimedTask extends Task {
 			DateTime updatedDt, boolean isDone, boolean isDeleted,
 			Integer priority) {
 		super(taskId, taskName, taskCategory, createdDt, updatedDt, isDone,
-				isDeleted, priority);
+				isDeleted, priority, "TimedTask");
 		setStartDateTime(startDt);
 		setEndDateTime(endDt);
 
@@ -79,6 +79,9 @@ public class TimedTask extends Task {
 		}
 		if (isDeleted != null) {
 			taskToString += "isDeleted=" + isDeleted.toString();
+		}
+		if (taskType != null) {
+			taskToString += "taskType=" + taskType;
 		}
 		return taskToString;
 	}
