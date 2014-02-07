@@ -1,4 +1,4 @@
-package basicLayout;
+package userinterface;
 import javax.swing.*;
 import java.awt.*;
 
