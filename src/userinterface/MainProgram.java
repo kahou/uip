@@ -15,9 +15,7 @@ public class MainProgram {
 	private static Controller controller2 = new Controller();
 
 	public static void main(String[] args) {
-		
-		System.out.println("aaa");
-		
+				
 		controller2.getNameList();
 		TaskList l = controller2.getTaskList();
 		l.addTask("Hello Task", "Hello", DateTime.now(), DateTime.now(), false, false, 1, "FinishTask");
