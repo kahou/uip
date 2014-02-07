@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class TaskList extends JPanel implements ActionListener{
+public class TaskListView extends JPanel implements ActionListener{
 	/**
 	 * 
 	 */
@@ -27,7 +27,7 @@ public class TaskList extends JPanel implements ActionListener{
 	public static void main(String[] args){
 		
 	}
-	public TaskList(){
+	public TaskListView(){
 		//create the panels needed
 		JPanel taskMenu = new JPanel();
 		JPanel tasks = new JPanel();
@@ -52,7 +52,7 @@ public class TaskList extends JPanel implements ActionListener{
 		//set the constraints for the "New task" button and add the button to taskMenu panel.
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 1;
+		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 20;      //make this component tall
 		c.weightx = 0.0;
@@ -72,13 +72,13 @@ public class TaskList extends JPanel implements ActionListener{
 		String[] sortValues = {"Starred","Priority","Color"};
 		taskMenu.add(new JComboBox(sortValues),c);
 		
-		//add the menu and the tasks to the TaskList Panel.
+		//add the menu and the tasks to the TaskListView Panel.
         this.add(taskMenu);
         this.add(tasks);
         
         newTask.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 
-        		  EditTask et = new EditTask();
+        		  AddTaskView et = new AddTaskView();
         	  } 
         	} );
         

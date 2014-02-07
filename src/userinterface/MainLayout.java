@@ -12,19 +12,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
-public class Layout extends JFrame {
+public class MainLayout extends JFrame {
 	
 	public static void main(String[] args){
 		 SwingUtilities.invokeLater(new Runnable() {
 
 	            public void run() {
-	                Layout ex = new Layout();
+	                MainLayout ex = new MainLayout();
 	               
 	            }
 	        });
 	}
 	
-	public Layout(){
+	public MainLayout(){
 		
 		JFrame window = new JFrame();
 		window.setSize(900, 700);
@@ -50,14 +50,14 @@ public class Layout extends JFrame {
         window.add(menubar, BorderLayout.NORTH);
         
         
-        TaskList tasklist1 = new TaskList();
-        //add TaskList here
+        TaskListView tasklist1 = new TaskListView();
+        //add TaskListView here
         
         mainPane.add(tasklist1);
        
         //add calendar here
         //mainPane.add(new JTextArea());
-        mainPane.add(new CalendarLayout());
+        mainPane.add(new CalendarView());
         
         tabbedPane.addTab("Calendar", mainPane);
         window.add(tabbedPane);

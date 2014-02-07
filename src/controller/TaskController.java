@@ -6,7 +6,7 @@ import java.util.List;
 import storage.Task;
 import storage.TaskList;
 
-public class Controller {
+public class TaskController {
 
 	private List<Task> newList;
 	private TaskList taskList = new TaskList();

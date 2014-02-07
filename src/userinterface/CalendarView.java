@@ -11,9 +11,9 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 
-public class CalendarLayout extends JPanel implements ActionListener {
+public class CalendarView extends JPanel implements ActionListener {
 	
-	public CalendarLayout() {
+	public CalendarView() {
 		String months[] = {"January", "February","March", "April","May","June","July","August","September","October","November","December"};
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
