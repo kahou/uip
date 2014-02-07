@@ -15,6 +15,11 @@ public class TaskList {
 		xm = XmlManager.getInstance();
 		this.taskList = xm.readTasklist();
 		/*
+=======
+
+	public TaskList() {
+
+>>>>>>> master
 		DateTime createdDt = new DateTime();
 		DateTime updatedDt = new DateTime();
 
@@ -27,6 +32,10 @@ public class TaskList {
 		createdDt = DateTime.now();
 		updatedDt = DateTime.now();*/
 /*
+=======
+		updatedDt = DateTime.now();
+
+>>>>>>> master
 		addTask(1, "timed task 2", "meeting", startdDt, endDt, createdDt,
 				updatedDt, false, false, 1);
 
@@ -84,6 +93,11 @@ public class TaskList {
 	}
 	
 	/*
+=======
+
+	}
+
+>>>>>>> master
 	public void addTask(int taskId, String taskName, String taskCategory,
 			DateTime endDt, DateTime createdDt, DateTime updatedDt,
 			boolean isDone, boolean isDeleted, Integer priority) {
@@ -118,5 +132,33 @@ public class TaskList {
 		taskList.add(newTask);
 
 	}*/
+=======
+	}
+
+	public void removeTask(Integer taskId) {
+
+		for (int i = 0; i < taskList.size(); i++) {
+			Task newTask;
+			newTask = taskList.get(i);
+			
+			if(newTask.getTaskId()== taskId){
+				newTask.setDeleted(true);
+			}
+
+		}
+
+	
+	}
+
+	public Task getTask(Integer taskId) {
+
+		return selectedTask;
+	}
+
+	public List<Task> getTaskList() {
+
+		return taskList;
+	}
+>>>>>>> master
 
 }

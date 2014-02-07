@@ -61,6 +61,32 @@ public class Task {
 	
 	}
 
+=======
+
+	public Task(int taskId, String taskName, String taskCategory,
+			DateTime createdDt, DateTime updatedDt, boolean isDone,
+			boolean isDeleted, Integer priority, String taskType) {
+		setTaskId(taskId);
+		setTaskName(taskName);
+		setTaskCategory(taskCategory);
+		setTaskCreated(createdDt);
+		setTaskUpdated(updatedDt);
+		setPriority(priority);
+		setDone(isDone);
+		setDeleted(isDeleted);
+		setTaskType(taskType);
+	}
+
+	public void setTaskType(String taskType2) {
+		this.taskType = taskType2;
+		
+	}
+	
+	public String getTaskType() {
+		return taskType;
+		
+	}
+>>>>>>> master
 	/**
 	 * To String
 	 */
@@ -146,6 +172,12 @@ public class Task {
 		}
 		
 		xm.editTask(this.taskId, "taskname", this.taskName);
+=======
+	}
+
+	protected boolean isTaskNameNullOrEmpty(String taskName) {
+		return taskName == null || taskName.isEmpty();
+>>>>>>> master
 	}
 
 	public String getTaskCategory() {

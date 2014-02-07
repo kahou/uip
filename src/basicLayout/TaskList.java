@@ -78,7 +78,7 @@ public class TaskList extends JPanel implements ActionListener{
         
         newTask.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 
-        		  
+        		  EditTask et = new EditTask();
         	  } 
         	} );
         
