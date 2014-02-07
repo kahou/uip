@@ -1,4 +1,4 @@
-package basewindow;
+package basicLayout;
 
 import java.awt.Color;
 import java.awt.Dimension;

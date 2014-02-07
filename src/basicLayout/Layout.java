@@ -1,4 +1,5 @@
-package basewindow;
+package basicLayout;
+
 import java.awt.*;
 
 import javax.swing.BoxLayout;
@@ -15,8 +16,8 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-public class Layout extends JFrame {
 
+public class Layout extends JFrame {
 	
 	public static void main(String[] args){
 		 SwingUtilities.invokeLater(new Runnable() {
@@ -60,7 +61,8 @@ public class Layout extends JFrame {
         mainPane.add(tasklist1);
        
         //add calendar here
-        mainPane.add(new JTextArea());
+        //mainPane.add(new JTextArea());
+        mainPane.add(new CalendarLayout());
         
         tabbedPane.addTab("Calendar", mainPane);
         window.add(tabbedPane);
