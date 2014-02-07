@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks>
+  <task taskid="1">
+    <taskname>I'm task1</taskname>
+    <taskcategory>Hello</taskcategory>
+    <priority>1</priority>
+    <taskcreated>07/02/2014 13:28:10</taskcreated>
+    <taskupdated>07/02/2014 13:28:10</taskupdated>
+    <isdone>false</isdone>
+    <isdeleted>false</isdeleted>
+    <tasktype>FinishTask</tasktype>
+  </task>
+</tasks>
