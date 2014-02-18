@@ -7,6 +7,8 @@ import org.joda.time.format.DateTimeFormatter;
 public class Task {
 
 	private static final String DEFAULT_UNNAMED_TASK_NAME = "DEFAULT";
+	protected DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+	
 	protected Integer taskId;
 	protected String taskName;
 	protected String taskCategory;
@@ -16,6 +18,8 @@ public class Task {
 	protected Boolean isDone;
 	protected Boolean isDeleted;
 	protected String taskType;
+	protected DateTime startTime;
+	protected DateTime endTime;
 	protected XmlManager xm;
 
 	/*
@@ -23,7 +27,7 @@ public class Task {
 	 */
 	public Task (String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType) {
+			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -35,8 +39,10 @@ public class Task {
 		this.isDone = isDone;
 		this.isDeleted = isDeleted;
 		this.taskType = taskType;
-		this.taskId = xm.newtask(this);
+		this.startTime = startDt;
+		this.endTime = endDt;
 		
+		this.taskId = xm.newtask(this);
 		
 	}
 	
@@ -45,7 +51,7 @@ public class Task {
 	 */
 	public Task(int taskId, String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType) {
+			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -58,86 +64,65 @@ public class Task {
 		this.isDone = isDone;
 		this.isDeleted = isDeleted;
 		this.taskType = taskType;
+		this.startTime = startDt;
+		this.endTime = endDt;
 	
 	}
-
-	/**
-	 * To String
+	
+	/*
+	 * Getters
 	 */
-	public String toString() {
-		String taskToString = "";
-		if (taskId != null) {
-			taskToString += "taskId=" + taskId;
-		}
-		if (taskName != null) {
-			taskToString += "taskName=" + taskName;
-		}
-		if (taskCategory != null) {
-			taskToString += "taskCategory=" + taskCategory;
-		}
-		if (taskCreated != null) {
-			taskToString += "taskCreated=" + taskCreated.toString();
-		}
-		if (taskUpdated != null) {
-			taskToString += "taskUpdated=" + taskUpdated.toString();
-		}
-		if (priority != null) {
-			taskToString += "priotiy=" + priority.toString();
-		}
-		if (isDone != null) {
-			taskToString += "isDone=" + isDone.toString();
-		}
-		if (isDeleted != null) {
-			taskToString += "isDeleted=" + isDeleted.toString();
-		}
-		if (taskType != null) {
-			taskToString += "taskType=" + taskType;
-		}
-		return taskToString;
+	public int getTaskId() {
+		return taskId;
 	}
-
-	/**
-	 * Getters and Setters
-	 */
-	public void setTaskType(String taskType2) {
-		this.taskType = taskType2;
-		
-		xm.editTask(this.taskId, "tasktype", this.taskType);
+	
+	public String getTaskName() {
+		return taskName;
+	}
+	
+	public String getTaskCategory() {
+		return taskCategory;
+	}
+	
+	public int getPriority() {
+		return priority;
+	}
+	
+	public DateTime getTaskCreated() {
+		return taskCreated;
+	}
+	
+	public DateTime getTaskUpdated() {
+		return this.taskUpdated;
+	}
+	
+	public boolean isDone() {
+		return isDone;
+	}
+	
+	public boolean isDeleted() {
+		return isDeleted;
 	}
 	
 	public String getTaskType() {
 		return taskType;
-		
 	}
 	
-	public int getTaskId() {
-		return taskId;
+	public DateTime getStartTime() {
+		return this.startTime;
 	}
-
+	
+	public DateTime getEndTime() {
+		return this.endTime;
+	}
+	
+	/*
+	 * Setters
+	 */
 	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
-
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-		
-		xm.editTask(this.taskId, "priority", Integer.toString(this.priority));
-	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	/**
-	 * Setter for Task Name
-	 * 
-	 * @param taskName
-	 *            null and empty strings defaults to default unnamed task name
-	 */
+	
 	public void setTaskName(String taskName) {
 		if (isTaskNameNullOrEmpty(taskName)) {
 			this.taskName = DEFAULT_UNNAMED_TASK_NAME;
@@ -147,75 +132,106 @@ public class Task {
 		
 		xm.editTask(this.taskId, "taskname", this.taskName);
 	}
-
-	public String getTaskCategory() {
-		return taskCategory;
-	}
-
+	
 	public void setTaskCategory(String taskCategory) {
 		this.taskCategory = taskCategory;
 		
 		xm.editTask(this.taskId, "taskcategory", this.taskCategory);
 	}
-
-	public DateTime getTaskUpdated() {
-		return this.taskUpdated;
+	
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+		
+		xm.editTask(this.taskId, "priority", Integer.toString(this.priority));
 	}
+	
+	public void setTaskCreated(DateTime taskCreated) {
+		this.taskCreated = taskCreated;
 
+		xm.editTask(this.taskId, "taskcreated", this.taskCreated.toString(this.formatter));
+	}
+	
 	public void setTaskUpdated(DateTime taskUpdated) {
 		this.taskUpdated = taskUpdated;
-		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-		xm.editTask(this.taskId, "taskUpdated", this.taskUpdated.toString(formatter));
-	}
 
-	public boolean isDone() {
-		return isDone;
+		xm.editTask(this.taskId, "taskupdated", this.taskUpdated.toString(this.formatter));
 	}
-
+	
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 		
-		xm.editTask(this.taskId, "isDone", this.isDone.toString());
+		xm.editTask(this.taskId, "isdone", this.isDone.toString());
 	}
-
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-
+	
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
-		xm.editTask(this.taskId, "isDeleted", this.isDeleted.toString());
+		xm.editTask(this.taskId, "isdeleted", this.isDeleted.toString());
 	}
-
-	public DateTime getTaskCreated() {
-		return taskCreated;
-	}
-
-	public void setTaskCreated(DateTime taskCreated) {
-		this.taskCreated = taskCreated;
+	
+	public void setTaskType(String taskType2) {
+		this.taskType = taskType2;
 		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-		xm.editTask(this.taskId, "taskCreated", this.taskCreated.toString(formatter));
+		xm.editTask(this.taskId, "tasktype", this.taskType);
 	}
-
-	public DateTime getEndDateTime() {
-		return null;
+	
+	public void setStartTime(DateTime startDt) {
+		this.startTime = startDt;
+		
+		xm.editTask(this.taskId, "starttime", this.startTime.toString(this.formatter));
 	}
-
-	public void setEndDateTime(DateTime dateTime) {
-		// do nothing
-	}
-
-	public DateTime getStartDateTime() {
-		return null;
-	}
-
-	public void setStartDateTime(DateTime dateTime) {
-		// do nothing
-	}
+	
+	public void setEndTime(DateTime endDt) {
+		this.endTime = endDt;
+		
+		xm.editTask(this.taskId, "endtime", this.endTime.toString(this.formatter));
+	}	
+	
+	/*
+	 * Utilities
+	 */
 	
 	protected boolean isTaskNameNullOrEmpty(String taskName) {
 		return taskName == null || taskName.isEmpty();
+	}
+	
+	/*
+	 * To String
+	 */
+	public String toString() {
+		String taskToString = "";
+		if (taskId != null) {
+			taskToString += "taskId=" + taskId + "\n";
+		}
+		if (taskName != null) {
+			taskToString += "taskName=" + taskName + "\n";
+		}
+		if (taskCategory != null) {
+			taskToString += "taskCategory=" + taskCategory + "\n";
+		}
+		if (taskCreated != null) {
+			taskToString += "taskCreated=" + taskCreated.toString() + "\n";
+		}
+		if (taskUpdated != null) {
+			taskToString += "taskUpdated=" + taskUpdated.toString() + "\n";
+		}
+		if (priority != null) {
+			taskToString += "priotiy=" + priority.toString() + "\n";
+		}
+		if (isDone != null) {
+			taskToString += "isDone=" + isDone.toString() + "\n";
+		}
+		if (isDeleted != null) {
+			taskToString += "isDeleted=" + isDeleted.toString() + "\n";
+		}
+		if (taskType != null) {
+			taskToString += "taskType=" + taskType + "\n";
+		}
+		if (startTime != null) {
+			taskToString += "startTime=" + startTime.toString() + "\n";
+		}
+		if (endTime != null) {
+			taskToString += "endTime=" + endTime.toString() + "\n";
+		}
+		return taskToString;
 	}
 }
