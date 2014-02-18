@@ -26,7 +26,7 @@ public class TimedTask extends Task {
 			DateTime updatedDt, boolean isDone, boolean isDeleted,
 			Integer priority) {
 		super(taskId, taskName, taskCategory, createdDt, updatedDt, isDone,
-				isDeleted, priority, "TimedTask");
+				isDeleted, priority, "TimedTask",startDt, endDt);
 		setStartDateTime(startDt);
 		setEndDateTime(endDt);
 

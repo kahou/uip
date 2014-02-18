@@ -6,13 +6,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+import controller.TaskController;
 
 
 public class TaskListView extends JPanel implements ActionListener{
@@ -27,10 +33,15 @@ public class TaskListView extends JPanel implements ActionListener{
 	public static void main(String[] args){
 		
 	}
+	
+	public JList tlist;
+	public DefaultListModel model;
+	public JPanel taskpanel;
+	
 	public TaskListView(){
 		//create the panels needed
 		JPanel taskMenu = new JPanel();
-		JPanel tasks = new JPanel();
+		this.taskpanel = new JPanel();
 		
 		
 		
@@ -42,10 +53,15 @@ public class TaskListView extends JPanel implements ActionListener{
 		taskMenu.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		taskMenu.setPreferredSize(new Dimension(200,150));
+		 
+		taskpanel.setPreferredSize(new Dimension(200,400));
+		taskpanel.add(new JLabel("Tasks"));
 		
-		tasks.setPreferredSize(new Dimension(200,400));
-		tasks.add(new JLabel("Tasks"));
-
+		
+		this.model= new DefaultListModel();
+		this.tlist = new JList();
+		
+		TaskController.getInstance().loadandshowTaskList(this);
 		
 		
 		//------------------------------------------------------
@@ -74,7 +90,7 @@ public class TaskListView extends JPanel implements ActionListener{
 		
 		//add the menu and the tasks to the TaskListView Panel.
         this.add(taskMenu);
-        this.add(tasks);
+        this.add(taskpanel);
         
         newTask.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 

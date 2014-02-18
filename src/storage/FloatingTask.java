@@ -6,9 +6,9 @@ public class FloatingTask extends Task {
 
 	public FloatingTask(int taskId, String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority) {
+			boolean isDeleted, Integer priority, DateTime startDt, DateTime endDt) {
 		super(taskId, taskName, taskCategory, createdDt, updatedDt, isDone,
-				isDeleted, priority, "FloatingTask");
+				isDeleted, priority, "FloatingTask",startDt,endDt);
 	}
 
 	/**

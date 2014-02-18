@@ -7,56 +7,56 @@ import org.joda.time.DateTime;
 
 public class TaskList {
 
-	private Task selectedTask;
 	private List<Task> taskList = new ArrayList<Task>();
-	protected XmlManager xm;
+	private static TaskList instance = null;
+
+	/**
+	 * Keep one instance globally
+	 * @return TaskList instance
+	 */
+	public static synchronized TaskList getInstance() {
+		if (instance == null) {
+			try {
+				instance = new TaskList();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return instance;
+	}
 
 	public TaskList() {
-		xm = XmlManager.getInstance();
-		this.taskList = xm.readTasklist();
+		this.taskList = XmlManager.getInstance().readTasklist();
 	}
 	
 	public Task getTaskByIndex(int index) {
 		return taskList.get(index);
 	}
+	
+	public int getListSize() {
+		return taskList.size();
+	}
 
 	public void addTask(String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt,
-			boolean isDone, boolean isDeleted, Integer priority, String taskType) {
-
+			boolean isDone, boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
 		Task newTask = new Task(taskName, taskCategory,
-				createdDt, updatedDt, isDone, isDeleted, priority, taskType);
-
+				createdDt, updatedDt, isDone, isDeleted, priority, taskType, startDt, endDt);
 		taskList.add(newTask);
-
 	}
-
-
-
-
-	public Task getTask(Integer taskId) {
-
-		return selectedTask;
-	}
-
-	public List<Task> getTaskList() {
-
-		return taskList;
-	}
-
 
 	public void removeTask(Integer taskId) {
-
 		for (int i = 0; i < taskList.size(); i++) {
 			Task newTask;
 			newTask = taskList.get(i);
 			
-			if(newTask.getTaskId()== taskId){
+			if(newTask.getTaskId() == taskId){
 				newTask.setDeleted(true);
 			}
-
 		}
-
+	}
 	
+	public List<Task> getTaskList() {
+		return taskList;
 	}
 }
