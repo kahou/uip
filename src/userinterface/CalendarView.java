@@ -23,8 +23,6 @@ public class CalendarView extends JPanel implements ActionListener {
 		  //Declare Panels
 		  JPanel panelLblCurrentDate = new JPanel();
 		  JPanel panelLblMonth = new JPanel();
-		  JPanel panelLeftMonth = new JPanel(); //buttons used to change the current month being viewed
-		  JPanel panelRightMonth = new JPanel();
 		  JPanel panelTable = new JPanel();
 		  
 		  //Declare Labels
@@ -36,10 +34,30 @@ public class CalendarView extends JPanel implements ActionListener {
 		  panelLblCurrentDate.add(labelCurrentDate);
 		  pane.add(panelLblCurrentDate);
 		   
+		  //Backwards icon/button
+		  java.net.URL backArrowURL = getClass().getResource("/resources/backArrow.gif");
+		    if (backArrowURL != null) {
+		    	 JButton buttonBackArrow = new JButton(new ImageIcon(backArrowURL));
+				  panelLblMonth.add(buttonBackArrow);
+				  buttonBackArrow.setBorder(BorderFactory.createEmptyBorder());
+				  buttonBackArrow.setContentAreaFilled(false);
+		    }
+		 
+		  
 		  //Month label and panel
 		  panelLblMonth.setBorder(BorderFactory.createLineBorder(Color.black));
 		  panelLblMonth.add(labelMonth);
 		  pane.add(panelLblMonth);
+		  
+		  //Forwards icon/button
+		  java.net.URL forwardArrowURL = getClass().getResource("/resources/forwardArrow.gif");
+		    if (forwardArrowURL != null) {
+		    	 JButton buttonForwardArrow = new JButton(new ImageIcon(forwardArrowURL));
+				  panelLblMonth.add(buttonForwardArrow);
+				  buttonForwardArrow.setBorder(BorderFactory.createEmptyBorder());
+				  buttonForwardArrow.setContentAreaFilled(false);
+		    }
+		  
 		  
 		  //Table set up
 		  DefaultTableModel tableModel = new DefaultTableModel();
@@ -53,6 +71,8 @@ public class CalendarView extends JPanel implements ActionListener {
 		  tableModel.setRowCount(5);
 		  calTable.setRowHeight(450/tableModel.getRowCount());
 		  JTableHeader tableHeader = calTable.getTableHeader(); //display days of the week
+		  tableHeader.setReorderingAllowed(false);
+		  tableHeader.setResizingAllowed(false);
 		  
 		  
 		  Calendar calDate = GregorianCalendar.getInstance();
@@ -71,7 +91,7 @@ public class CalendarView extends JPanel implements ActionListener {
 		   }
 		   j=0;
 		  }
-
+		  calTable.setEnabled(false);
 		  panelTable.setBorder(BorderFactory.createLineBorder(Color.black));
 		  panelTable.add(tableHeader);
 		  panelTable.add(calTable);

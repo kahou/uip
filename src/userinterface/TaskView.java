@@ -1,6 +1,5 @@
 package userinterface;
 
-import com.sun.jarsigner.ContentSignerParameters;
 import org.joda.time.DateTime;
 import storage.Task;
 
