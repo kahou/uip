@@ -19,10 +19,10 @@ public class DeadlineTask extends Task {
 	 * @param isDeleted
 	 */
 	public DeadlineTask(int taskId, String taskName, String taskCategory,
-			DateTime endDt, DateTime createdDt, DateTime updatedDt,
-			boolean isDone, boolean isDeleted, Integer priority) {
+			DateTime createdDt, DateTime updatedDt,
+			boolean isDone, boolean isDeleted, Integer priority, DateTime startDt, DateTime endDt) {
 		super(taskId, taskName, taskCategory, createdDt, updatedDt, isDone,
-				isDeleted, priority, "DeadlineTask");
+				isDeleted, priority, "DeadlineTask",startDt,endDt);
 		setEndDateTime(endDt);
 	}
 
