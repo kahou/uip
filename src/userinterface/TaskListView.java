@@ -6,10 +6,19 @@ import storage.Task;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+import controller.TaskController;
 
 /**
  * A view that manages everything related to creating and listing Tasks in the sidebar.
@@ -20,33 +29,73 @@ public class TaskListView extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-    private JPanel taskListView;
-    private JPanel taskMenu;
+	public static void main(String[] args){
+
+	}
+
+	public JList tlist;
+	public DefaultListModel model;
+	public JPanel taskpanel;
 
 	public TaskListView(){
-	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//create the panels needed
+		JPanel taskMenu = new JPanel();
+		this.taskpanel = new JPanel();
 
-        /**
-         * Create and add a TaskList to the pane.
-         */
-        taskMenu = this.setupTaskList();
+
+
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setPreferredSize(null);
+		this.setMaximumSize(new Dimension(200,600));
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		taskMenu.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		taskMenu.setPreferredSize(new Dimension(200,150));
+
+		taskpanel.setPreferredSize(new Dimension(200,400));
+		taskpanel.add(new JLabel("Tasks"));
+
+
+		this.model= new DefaultListModel();
+		this.tlist = new JList();
+
+		TaskController.getInstance().loadandshowTaskList(this);
+
+
+		//------------------------------------------------------
+		//set the constraints for the "New task" button and add the button to taskMenu panel.
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 20;      //make this component tall
+		c.weightx = 0.0;
+		JButton newTask = new JButton("New Task");
+		taskMenu.add(newTask,c);
+		//------------------------------------------------------
+		//set the constraints for the Sort by label.
+		c.gridx = 0;
+		c.gridy = 1;
+		JLabel sortLabel = new JLabel("Sort by:", JLabel.CENTER);
+		taskMenu.add(sortLabel,c);
+
+		//------------------------------------------------------
+		//set the constraints for the Sort by label.
+		c.gridx = 2;
+		c.gridy = 1;
+		String[] sortValues = {"Starred","Priority","Color"};
+		taskMenu.add(new JComboBox(sortValues),c);
+
+		//add the menu and the tasks to the TaskListView Panel.
         this.add(taskMenu);
+        this.add(taskpanel);
 
-        /**
-         * Configuring and creating taskListView.
-         * Configuring and creating a scrolling panel that will
-         * house the list of tasks.
-         */
-        taskListView = new JPanel();
-        taskListView.setLayout(new BoxLayout(this.taskListView, BoxLayout.Y_AXIS));
-        this.addTasks(50);
-
-        JScrollPane scrollPane = new JScrollPane(taskListView,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        //scrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        this.add(scrollPane);
+        newTask.addActionListener(new ActionListener() {
+        	  public void actionPerformed(ActionEvent e) {
+        		  AddTaskView et = new AddTaskView();
+        	  }
+        	} );
 	}
 
     /**
@@ -93,7 +142,7 @@ public class TaskListView extends JPanel implements ActionListener{
         c.gridx = 2;
         c.gridy = 1;
         String[] sortValues = {"Starred","Priority","Color"};
-        tempPanel.add(new JComboBox(sortValues),c); 
+        tempPanel.add(new JComboBox(sortValues),c);
 
         c.ipady = 10;
         c.gridx = 0;
@@ -127,8 +176,8 @@ public class TaskListView extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 }

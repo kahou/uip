@@ -5,54 +5,38 @@ import java.util.List;
 
 import storage.Task;
 import storage.TaskList;
+import storage.XmlManager;
+import userinterface.TaskListView;
 
 public class TaskController {
+	
+	private static TaskController instance = null;
 
-	private List<Task> newList;
-	private TaskList taskList = new TaskList();
-
-	private List<String> taskNameList = new ArrayList<String>();
-
-	public List<String> getNameList() {
-		taskNameList.clear();
-		newList = taskList.getTaskList();
-
-		for (int i = 0; i < newList.size(); i++) {
-			Task newTask;
-			newTask = newList.get(i);
-			taskNameList.add(newTask.getTaskName());
-
+	public static synchronized TaskController getInstance() {
+		if (instance == null) {
+			try {
+				instance = new TaskController();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
-		for (int i = 0; i < taskNameList.size(); i++) {
-			System.out.println(taskNameList.get(i));
-
-		}
-
-		return taskNameList;
-	}
-
-	public TaskList getTaskList() {
-		return this.taskList;
+		return instance;
 	}
 	
 	/**
-	 * Decides type of task based on input date params
-	 * 
-	 * @param inputCommand
-	 * @return int for number of date/time specified
+	 * Load tasks from db and show in the tasklistview
+	 * @param tasklistview
 	 */
-	private int decideTaskType(Task inputTask) {
-		int typeCount = 0;
-		if (inputTask.getTaskType() != null) {
-			typeCount++;
+	public void loadandshowTaskList(TaskListView tlview) {
+		//Get tasklist
+		TaskList tasklist = TaskList.getInstance();
+		//Load to list model
+		for(int i=0; i<tasklist.getListSize(); i++) {
+			tlview.model.addElement(tasklist.getTaskByIndex(i).getTaskName());
 		}
-		if (inputTask.getTaskType() != null) {
-			typeCount++;
-		}
-		return typeCount;
-	}
-	
-	
+		//Init tasklist
+		tlview.tlist.setModel(tlview.model);
+		tlview.taskpanel.add(tlview.tlist);	
+	}	
 
 }

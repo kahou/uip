@@ -12,6 +12,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
+import org.joda.time.DateTime;
+
+import storage.Task;
+import storage.TaskList;
+import controller.TaskController;
+
 public class MainLayout extends JFrame {
 	
 	public static void main(String[] args){
@@ -71,6 +77,24 @@ public class MainLayout extends JFrame {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+        
+        
+        /*
+        TaskList tl = TaskList.getInstance();
+        Task t = tl.getTaskByIndex(0);
+        System.out.println(t);
+        t.setTaskName(t.getTaskName()+"(Edited)");
+        t.setTaskCategory(t.getTaskCategory()+"(Edited)");
+        t.setPriority(10);
+        t.setDeleted(true);
+        t.setDone(true);
+        t.setTaskType(t.getTaskType()+"(Edited)");
+        t.setTaskCreated(t.getTaskCreated().plusDays(1));
+        t.setTaskUpdated(t.getTaskUpdated().plusDays(1));
+        t.setStartTime(t.getStartTime().plusDays(1));
+        t.setEndTime(t.getEndTime().plusDays(1));
+        System.out.println(t);
+        */
 	}
 	
 	
