@@ -20,6 +20,7 @@ public class Task {
 	protected String taskType;
 	protected DateTime startTime;
 	protected DateTime endTime;
+	protected Integer progress;
 	protected XmlManager xm;
 
 	/*
@@ -27,7 +28,7 @@ public class Task {
 	 */
 	public Task (String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
+			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt,Integer progress) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -41,6 +42,7 @@ public class Task {
 		this.taskType = taskType;
 		this.startTime = startDt;
 		this.endTime = endDt;
+		this.progress = progress;
 		
 		this.taskId = xm.newtask(this);
 		
@@ -51,7 +53,7 @@ public class Task {
 	 */
 	public Task(int taskId, String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
+			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -66,6 +68,7 @@ public class Task {
 		this.taskType = taskType;
 		this.startTime = startDt;
 		this.endTime = endDt;
+		this.progress = progress;
 	
 	}
 	
@@ -114,6 +117,10 @@ public class Task {
 	
 	public DateTime getEndTime() {
 		return this.endTime;
+	}
+	
+	public int getProgress() {
+		return this.progress;
 	}
 	
 	/*
@@ -186,6 +193,12 @@ public class Task {
 		xm.editTask(this.taskId, "endtime", this.endTime.toString(this.formatter));
 	}	
 	
+	public void setProgress(Integer progress) {
+		this.progress = progress;
+		
+		xm.editTask(this.taskId, "progress", Integer.toString(this.progress));
+	}
+	
 	/*
 	 * Utilities
 	 */
@@ -231,6 +244,9 @@ public class Task {
 		}
 		if (endTime != null) {
 			taskToString += "endTime=" + endTime.toString() + "\n";
+		}
+		if (progress != null) {
+			taskToString += "progress=" + progress.toString() + "\n";
 		}
 		return taskToString;
 	}

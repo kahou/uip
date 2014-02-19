@@ -39,9 +39,9 @@ public class TaskList {
 
 	public void addTask(String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt,
-			boolean isDone, boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt) {
+			boolean isDone, boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
 		Task newTask = new Task(taskName, taskCategory,
-				createdDt, updatedDt, isDone, isDeleted, priority, taskType, startDt, endDt);
+				createdDt, updatedDt, isDone, isDeleted, priority, taskType, startDt, endDt, progress);
 		taskList.add(newTask);
 	}
 

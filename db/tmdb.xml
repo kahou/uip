@@ -11,7 +11,8 @@
     <isdeleted>true</isdeleted>  
     <tasktype>FinishTask(Edited)</tasktype>  
     <starttime>19/02/2014 01:23:44</starttime>  
-    <endtime>19/02/2014 01:23:44</endtime> 
+    <endtime>19/02/2014 01:23:44</endtime>  
+    <progress>50</progress> 
   </task>  
   <task taskid="2"> 
     <taskname>I'm task2</taskname>  
@@ -23,7 +24,8 @@
     <isdeleted>false</isdeleted>  
     <tasktype>FinishTask</tasktype>  
     <starttime>null</starttime>  
-    <endtime>null</endtime> 
+    <endtime>null</endtime>  
+    <progress>0</progress> 
   </task>  
   <task taskid="3"> 
     <taskname>I'm task3</taskname>  
@@ -35,7 +37,8 @@
     <isdeleted>false</isdeleted>  
     <tasktype>FinishTask</tasktype>  
     <starttime>null</starttime>  
-    <endtime>null</endtime> 
+    <endtime>null</endtime>  
+    <progress>0</progress> 
   </task>  
   <task taskid="4"> 
     <taskname>I'm task4</taskname>  
@@ -47,7 +50,8 @@
     <isdeleted>false</isdeleted>  
     <tasktype>FinishTask</tasktype>  
     <starttime>null</starttime>  
-    <endtime>null</endtime> 
+    <endtime>null</endtime>  
+    <progress>0</progress> 
   </task>  
   <task taskid="5"> 
     <taskname>I'm task5</taskname>  
@@ -59,6 +63,7 @@
     <isdeleted>false</isdeleted>  
     <tasktype>FinishTask</tasktype>  
     <starttime>null</starttime>  
-    <endtime>null</endtime> 
+    <endtime>null</endtime>  
+    <progress>0</progress> 
   </task> 
 </tasks>
