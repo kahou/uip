@@ -14,6 +14,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
+import storage.Task;
+import storage.TaskList;
+
 public class MainLayout extends JFrame {
 
     public static void main(String[] args){
@@ -88,6 +91,7 @@ public class MainLayout extends JFrame {
         t.setTaskUpdated(t.getTaskUpdated().plusDays(1));
         t.setStartTime(t.getStartTime().plusDays(1));
         t.setEndTime(t.getEndTime().plusDays(1));
+        t.setProgress(50);
         System.out.println(t);
         */
 	}
