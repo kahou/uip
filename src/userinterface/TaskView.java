@@ -41,6 +41,8 @@ public class TaskView extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 0;
 
         c.ipadx = 20;
         this.nameLabel = new JLabel(this.taskName);
@@ -69,6 +71,11 @@ public class TaskView extends JPanel implements ActionListener {
         c.gridy = 2;
         this.progressSlider = this.setupProgressSlider();
         this.add(progressSlider, c);
+
+        c.gridwidth = 2;
+        c.gridy = 3;
+        this.doneButton = new JButton("Finished!");
+        this.add(doneButton,c);
     }
 
     private JSlider setupProgressSlider() {

@@ -117,22 +117,7 @@ public class TaskListView extends JPanel implements ActionListener{
             taskListView.add(Box.createRigidArea(new Dimension(0, 5)));
         }
     }
-    /**
-     * Randomly generates numberOfTasks amount of tasks and adds them to the tasks view.
-     */
-    /*
-    private void addTasks(int numberOfTasks) {
-        for (Integer i = 1; i <= numberOfTasks; i++) {
-            Task tempTask = new Task("Task no:  " +  i, "Category",
-                    DateTime.now(), DateTime.now(), false,
-                    false, 3, "Type",DateTime.now(), DateTime.now());
 
-            TaskView newTaskView = new TaskView(tempTask);
-            taskListView.add(newTaskView);
-            taskListView.add(Box.createRigidArea(new Dimension(0, 5)));
-        }
-    }
-*/
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
