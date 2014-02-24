@@ -1,21 +1,19 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import storage.Task;
 import storage.TaskList;
-import storage.XmlManager;
+import userinterface.MainLayout;
 import userinterface.TaskListView;
 
-public class TaskController {
-	
-	private static TaskController instance = null;
+import javax.swing.*;
 
-	public static synchronized TaskController getInstance() {
+public class MainController {
+	
+	private static MainController instance = null;
+
+	public static synchronized MainController getInstance() {
 		if (instance == null) {
 			try {
-				instance = new TaskController();
+				instance = new MainController();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -31,12 +29,14 @@ public class TaskController {
 		//Get tasklist
 		TaskList tasklist = TaskList.getInstance();
 		//Load to list model
+        /*
 		for(int i=0; i<tasklist.getListSize(); i++) {
 			tlview.model.addElement(tasklist.getTaskByIndex(i).getTaskName());
 		}
 		//Init tasklist
 		tlview.tlist.setModel(tlview.model);
-		tlview.taskpanel.add(tlview.tlist);	
+		tlview.taskpanel.add(tlview.tlist);
+			*/
 	}	
 
 }

@@ -1,5 +1,7 @@
 package userinterface;
 
+import controller.MainController;
+
 import java.awt.*;
 
 import javax.swing.BoxLayout;
@@ -12,23 +14,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
-import org.joda.time.DateTime;
-
 import storage.Task;
 import storage.TaskList;
-import controller.TaskController;
 
 public class MainLayout extends JFrame {
-	
-	public static void main(String[] args){
-		 SwingUtilities.invokeLater(new Runnable() {
 
-	            public void run() {
-	                MainLayout ex = new MainLayout();
-	               
-	            }
-	        });
-	}
+    public static void main(String[] args){
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                MainLayout ex = new MainLayout();
+            }
+        });
+    }
 	
 	public MainLayout(){
 		
@@ -93,6 +91,7 @@ public class MainLayout extends JFrame {
         t.setTaskUpdated(t.getTaskUpdated().plusDays(1));
         t.setStartTime(t.getStartTime().plusDays(1));
         t.setEndTime(t.getEndTime().plusDays(1));
+        t.setProgress(50);
         System.out.println(t);
         */
 	}

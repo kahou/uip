@@ -138,6 +138,13 @@ public class XmlManager {
 		} else {
 			endTime.setText("null");
 		}
+		
+		Element progress = task.addElement("progress");
+		if (t.progress != null) {
+			progress.setText(Integer.toString(t.progress));
+		} else {
+			progress.setText("null");
+		}
 
 		this.write(doc);
 
@@ -163,6 +170,7 @@ public class XmlManager {
 		String xtaskType = null;
 		DateTime xstartTime = null;
 		DateTime xendTime = null;
+		Integer xprogress = null;
 		
 		
 		String xpath = "/tasks/task[@taskid=" + Integer.toString(taskid) + "]";
@@ -233,10 +241,16 @@ public class XmlManager {
 				} else {
 					xendTime = this.formatter.parseDateTime(childelement.getText());
 				}
+			} else if (nodeindex == 11) {
+				if (childelement.getText().equals("null")) {
+					xprogress= null;
+				} else {
+					xprogress = Integer.parseInt(childelement.getText());
+				}
 			}
 		}
 		
-		Task t = new Task(taskid, xtaskName, xtaskCategory, xtaskCreated, xtaskUpdated, xisDone, xisDeleted, xpriority, xtaskType, xstartTime, xendTime);
+		Task t = new Task(taskid, xtaskName, xtaskCategory, xtaskCreated, xtaskUpdated, xisDone, xisDeleted, xpriority, xtaskType, xstartTime, xendTime, xprogress);
 		return t;
 	}
 	
