@@ -16,7 +16,7 @@ import java.util.List;
 
 public class XmlManager {
 
-	private static final String XML_FILE_PATH = "db/tmdb.xml";
+	private static final String XML_FILE_PATH = System.getProperty("user.home")+System.getProperty("file.separator")+"tmdb.xml";
 	private DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 	
 	protected Document doc;

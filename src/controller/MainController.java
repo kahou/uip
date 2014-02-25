@@ -20,7 +20,16 @@ public class MainController {
 		}
 		return instance;
 	}
-	
+	public static void main(String[] args) {
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				MainLayout ex = new MainLayout();
+
+			}
+		});
+	}
 	/**
 	 * Load tasks from db and show in the tasklistview
 	 * @param tasklistview

@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.swing.Box;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import org.joda.time.DateTime;
 
 import storage.Task;
 import storage.TaskList;
@@ -144,5 +147,10 @@ public class TaskListView extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-
+	public void saveData (AddTaskView addTask){
+		TaskList t1 = new TaskList();
+		//AddTaskView task = new AddTaskView();
+		//String tn = AddTaskView.text1.getText();
+		t1.addTask("tname", "category", new DateTime(), new DateTime(), false, false, 0, "type",new DateTime(),new DateTime());
+		}
 }

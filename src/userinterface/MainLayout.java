@@ -34,16 +34,7 @@ public class MainLayout extends JFrame {
 	String language = "en";
 	String country = "US";
 
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-
-			public void run() {
-				MainLayout ex = new MainLayout();
-
-			}
-		});
-	}
+	
 
 	/*
 	 * 
@@ -83,7 +74,7 @@ public class MainLayout extends JFrame {
 	// Loads all the properties from the properties file
 	private void LoadConfig() {
 
-		File configFile = new File("src/config.properties");
+		File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
 
 		try {
 			FileReader reader = new FileReader(configFile);
@@ -103,7 +94,7 @@ public class MainLayout extends JFrame {
 
 	// Saves the current position and size of the window
 	private void SaveConfig() {
-		File configFile = new File("src/config.properties");
+		File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
 		try {
 			FileOutputStream out = new FileOutputStream(configFile);
 			Properties props = new Properties();
