@@ -20,16 +20,9 @@ class MenuAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
        Object type = getValue(MNEMONIC_KEY);
-       if(type.equals(1)){
-    	   controller.setNewLanguage("en", "US");
-       }
-       else if(type.equals(2)){
-    	   controller.setNewLanguage("sv", "SE");
-       }
-       else if(type.equals(3)){
-    	   controller.setNewLanguage("zh", "CN");
-       }
-       
+       if(type.equals(1)){ controller.setNewLanguage("en", "US"); }
+       else if(type.equals(2)){ controller.setNewLanguage("sv", "SE"); }
+       else if(type.equals(3)){ controller.setNewLanguage("zh", "CN"); }   
     }
     
 	

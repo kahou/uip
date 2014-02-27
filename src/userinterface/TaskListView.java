@@ -72,7 +72,7 @@ public class TaskListView extends JPanel implements ActionListener {
 	 * Generates a panel with buttons for creating and scrollbox for sorting
 	 * tasks
 	 * 
-	 * @return A panel with buttons, labels and scrollboxes.
+	 * @return A panel with buttons, labe	ls and scrollboxes.
 	 */
 	private JPanel setupTaskList() {
 		JPanel tempPanel = new JPanel(new GridBagLayout());

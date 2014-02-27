@@ -33,7 +33,7 @@ public class MainLayout extends JFrame {
 	Internationlization internationlization;
 	int num = 0;
 	ResourceBundle messages;
-	MainController controller;
+	MainController controller = MainController.getInstance();
 
 	
 
@@ -41,7 +41,6 @@ public class MainLayout extends JFrame {
 	public MainLayout() {
 
 		// load all configs from property file
-		controller = MainController.getInstance();
 		controller.LoadConfig();
 
 		Internationlization internationlization = new Internationlization();
