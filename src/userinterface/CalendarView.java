@@ -90,7 +90,6 @@ public class CalendarView extends JPanel implements ActionListener {
 
         tableUpdate();
 
-
     }
 
     public void tableUpdate(){
