@@ -1,5 +1,12 @@
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import storage.TaskList;
 import userinterface.MainLayout;
 import userinterface.TaskListView;
@@ -9,6 +16,14 @@ import javax.swing.*;
 public class MainController {
 	
 	private static MainController instance = null;
+	private int height = 0;
+	private int width = 0;
+	private int inlineLeft = 0;
+	private int inlineTop = 0;
+	private String language = "en";
+	private String country = "US";
+	 
+
 
 	public static synchronized MainController getInstance() {
 		if (instance == null) {
@@ -25,11 +40,13 @@ public class MainController {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
-				MainLayout ex = new MainLayout();
+				MainLayout layout = new MainLayout();
 
 			}
 		});
 	}
+	
+	
 	/**
 	 * Load tasks from db and show in the tasklistview
 	 * @param tasklistview
@@ -46,6 +63,98 @@ public class MainController {
 		tlview.tlist.setModel(tlview.model);
 		tlview.taskpanel.add(tlview.tlist);
 			*/
-	}	
+	}
+	
+	/*
+	 * 
+	 * Getters
+	 */
+	public String getLanguage() {
+		return this.language;
+	}
+	public String getCountry() {
+		return this.country;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getInlineTop() {
+		return this.inlineTop;
+	}
+
+	public int getInlineLeft() {
+		return this.inlineLeft;
+	}
+
+	/*
+	 * 
+	 * Setters
+	 */
+	public void setNewSize(int height, int width) {
+		this.height = height;
+		this.width = width;
+	}
+
+	public void setNewInline(int inlineLeft, int inlineTop) {
+		this.inlineLeft = inlineLeft;
+		this.inlineTop = inlineTop;
+	}
+	public void setNewLanguage(String language, String country){
+		this.language = language;
+		this.country = country;
+	}
+	
+	
+	public void LoadConfig() {
+
+		File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
+
+		try {
+			FileReader reader = new FileReader(configFile);
+			Properties props = new Properties();
+			props.load(reader);
+			this.height = Integer.parseInt(props.getProperty("height"));
+			this.width = Integer.parseInt(props.getProperty("width"));
+			this.inlineLeft = Integer.parseInt(props.getProperty("inlineLeft"));
+			this.inlineTop = Integer.parseInt(props.getProperty("inlineTop"));
+			this.language = props.getProperty("language");
+			this.country = props.getProperty("country");
+			reader.close();
+		} catch (FileNotFoundException ex) {
+			// file does not exist
+		} catch (IOException ex) {
+			// I/O error
+		}
+	}
+	// Saves the current position and size of the window
+		public void SaveConfig() {
+			File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
+			try {
+				FileOutputStream out = new FileOutputStream(configFile);
+				Properties props = new Properties();
+				props.setProperty("height", Integer.toString(this.height));
+				props.setProperty("width", Integer.toString(this.width));
+				props.setProperty("inlineTop", Integer.toString(this.inlineTop));
+				props.setProperty("inlineLeft", Integer.toString(this.inlineLeft));
+				props.setProperty("language", language);
+				props.setProperty("country", country);
+				props.store(out, "");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	
+	
 
 }
