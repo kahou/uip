@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,6 +14,11 @@ import userinterface.TaskListView;
 
 import javax.swing.*;
 
+/**
+ * 
+ * MainController is the class that will controll the whole program
+ *	There can only be 1 instance of this class.
+ */
 public class MainController {
 	
 	private static MainController instance = null;
@@ -22,6 +28,8 @@ public class MainController {
 	private int inlineTop = 0;
 	private String language = "en";
 	private String country = "US";
+	private static MainLayout test;
+	
 	 
 
 
@@ -35,17 +43,30 @@ public class MainController {
 		}
 		return instance;
 	}
+	/*
+	 * This is the main for the program.
+	 */
 	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
+		test = new MainLayout();
+		/*SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
 				MainLayout layout = new MainLayout();
 
 			}
-		});
+		});*/
 	}
 	
+	/**
+	 * ReloadGui closes the old window and starts up a new.
+	 * @author Jesper Andersson
+	 */
+	public void ReloadGui(){
+		test.setVisible(false); //you can't see me!
+		test.dispose();
+		test = new MainLayout();
+		
+	}
 	
 	/**
 	 * Load tasks from db and show in the tasklistview
@@ -110,7 +131,10 @@ public class MainController {
 		this.country = country;
 	}
 	
-	
+	/**
+	 * LoadConfig takes all the variables from the property file and saves them into the corresponding variable.
+	 * @author Jesper Andersson
+	 */
 	public void LoadConfig() {
 
 		File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
@@ -133,6 +157,10 @@ public class MainController {
 		}
 	}
 	// Saves the current position and size of the window
+	/**
+	 * SaveConfig takes all the variables and saves them to the property.
+	 * @author Jesper Andersson
+	 */
 		public void SaveConfig() {
 			File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
 			try {
