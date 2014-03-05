@@ -26,7 +26,12 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import controller.MainController;
-
+/**
+ * 
+ * MainLayout is the main gui class that contains everything the gui has.
+ * 
+ *
+ */
 public class MainLayout extends JFrame {
 
 	JFrame window;
@@ -50,11 +55,11 @@ public class MainLayout extends JFrame {
 
 		messages = internationlization2.getInternationlizationBundle();
 
-		window = new JFrame();
-		window.setLocation(controller.getInlineLeft(),controller.getInlineTop());
-		window.setSize(controller.getWidth(), controller.getHeight());
-	
-		
+
+		window = this;
+		this.setLocation(controller.getInlineLeft(),controller.getInlineTop());
+		this.setSize(controller.getWidth(), controller.getHeight());
+
 		
 		//Menu initialization.
 		JPanel mainPane = new JPanel();
@@ -79,21 +84,13 @@ public class MainLayout extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab(messages.getString("calendar"), mainPane);
 
-		// Create the statusbar
-		/*
-		 * JLabel statusbar = new JLabel("Statusbar");
-		 * statusbar.setPreferredSize(new Dimension(-1, 22));
-		 * statusbar.setBorder(LineBorder.createGrayLineBorder());
-		 */
-		window.add(menubar, BorderLayout.NORTH);
-		window.add(tabbedPane);
-		// window.add(statusbar, BorderLayout.SOUTH);
+		this.add(menubar, BorderLayout.NORTH);
+		this.add(tabbedPane);
+		this.setTitle(messages.getString("calendar"));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 
-		window.setTitle("BorderLayout");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setVisible(true);
-
-		window.addComponentListener(new ComponentListener() {
+		this.addComponentListener(new ComponentListener() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				controller.setNewSize(window.getBounds().height, window.getBounds().width);
