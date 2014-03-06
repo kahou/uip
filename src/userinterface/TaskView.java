@@ -19,7 +19,7 @@ import storage.Task;
 public class TaskView extends JPanel implements ActionListener {
 	private String taskName;
 	private String taskCategory;
-	private Integer priority;
+	private String priority;
 	private DateTime taskDate;
 	private Boolean isDone;
 

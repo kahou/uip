@@ -151,6 +151,6 @@ public class TaskListView extends JPanel implements ActionListener {
 		TaskList t1 = new TaskList();
 		//AddTaskView task = new AddTaskView();
 		//String tn = AddTaskView.text1.getText();
-		t1.addTask("tname", "category", new DateTime(), new DateTime(), false, false, 0, "type",new DateTime(),new DateTime());
+		t1.addTask("tname", "category", new DateTime(), new DateTime(), false, false, "Normal", "type",new DateTime(),new DateTime(),0);
 		}
 }
