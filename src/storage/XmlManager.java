@@ -16,8 +16,9 @@ import java.util.List;
 
 public class XmlManager {
 
-	private static final String XML_FILE_PATH = "db/tmdb.xml";
-	private DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+	private static final String XML_FILE_PATH = System.getProperty("user.home")+System.getProperty("file.separator")+"tmdb.xml";
+	//private static final String XML_FILE_PATH = "db/tmdb.xml";
+	private DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 	
 	protected Document doc;
 	protected Element root;
@@ -84,7 +85,7 @@ public class XmlManager {
 
 		Element priority = task.addElement("priority");
 		if (t.priority != null) {
-			priority.setText(Integer.toString(t.priority));
+			priority.setText(t.priority);
 		} else {
 			priority.setText("null");
 		}
@@ -162,7 +163,7 @@ public class XmlManager {
 		
 		String xtaskName = null;
 		String xtaskCategory = null;
-		Integer xpriority = null;
+		String xpriority = null;
 		DateTime xtaskCreated = null;
 		DateTime xtaskUpdated = null;
 		Boolean xisDone = null;
@@ -197,7 +198,7 @@ public class XmlManager {
 				if (childelement.getText().equals("null")) {
 					xpriority = null;
 				} else {
-					xpriority = Integer.parseInt(childelement.getText());
+					xpriority = childelement.getText();
 				}
 			} else if (nodeindex == 4) {
 				if (childelement.getText().equals("null")) {
@@ -310,7 +311,7 @@ public class XmlManager {
 		XMLWriter writer = null;
 
 		try {
-			writer = new XMLWriter(new FileWriter("db/tmdb.xml"), format);
+			writer = new XMLWriter(new FileWriter(XML_FILE_PATH), format);
 			// writer = new XMLWriter(new FileWriter("db/tmdb.xml"));
 			writer.write(document);
 			writer.close();

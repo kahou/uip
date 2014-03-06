@@ -12,7 +12,7 @@ public class TaskList {
 
 	/**
 	 * Keep one instance globally
-	 * @return TaskList instance
+	 * @return TaskList instance	
 	 */
 	public static synchronized TaskList getInstance() {
 		if (instance == null) {
@@ -39,7 +39,7 @@ public class TaskList {
 
 	public void addTask(String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt,
-			boolean isDone, boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
+			boolean isDone, boolean isDeleted, String priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
 		Task newTask = new Task(taskName, taskCategory,
 				createdDt, updatedDt, isDone, isDeleted, priority, taskType, startDt, endDt, progress);
 		taskList.add(newTask);

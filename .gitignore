@@ -6,3 +6,4 @@
 /bin
 .idea/*
 UIP.iml
+src/config.properties

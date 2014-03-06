@@ -12,7 +12,7 @@ public class Task {
 	protected Integer taskId;
 	protected String taskName;
 	protected String taskCategory;
-	protected Integer priority;
+	protected String priority;
 	protected DateTime taskCreated;
 	protected DateTime taskUpdated;
 	protected Boolean isDone;
@@ -28,7 +28,7 @@ public class Task {
 	 */
 	public Task (String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt,Integer progress) {
+			boolean isDeleted, String priority, String taskType, DateTime startDt, DateTime endDt,Integer progress) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -53,7 +53,7 @@ public class Task {
 	 */
 	public Task(int taskId, String taskName, String taskCategory,
 			DateTime createdDt, DateTime updatedDt, boolean isDone,
-			boolean isDeleted, Integer priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
+			boolean isDeleted, String priority, String taskType, DateTime startDt, DateTime endDt, Integer progress) {
 		
 		xm = XmlManager.getInstance();
 		
@@ -87,7 +87,7 @@ public class Task {
 		return taskCategory;
 	}
 	
-	public int getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 	
@@ -146,10 +146,10 @@ public class Task {
 		xm.editTask(this.taskId, "taskcategory", this.taskCategory);
 	}
 	
-	public void setPriority(Integer priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 		
-		xm.editTask(this.taskId, "priority", Integer.toString(this.priority));
+		xm.editTask(this.taskId, "priority", this.priority);
 	}
 	
 	public void setTaskCreated(DateTime taskCreated) {

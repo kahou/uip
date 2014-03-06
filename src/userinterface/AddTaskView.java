@@ -1,43 +1,197 @@
 package userinterface;
+
 import storage.Task;
 
 import javax.swing.*;
-import javax.swing.border.Border;
+
+import org.joda.time.DateTime;
+
+import com.toedter.calendar.JDateChooser;
+
+import controller.MainController;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-
-public class AddTaskView {
-	public AddTaskView(){
-		JFrame popUp = new JFrame();
-        popUp.pack();
-        popUp.setResizable(false);
-        popUp.setSize(630, 490);
-
-        Container pane = popUp.getContentPane();
-
-        pane.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.weightx = GridBagConstraints.HORIZONTAL;
-        c.weighty = GridBagConstraints.VERTICAL;
-
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.ipady = 10;
-        JLabel TaskNameLabel = new JLabel("Task name");
-        pane.add(TaskNameLabel, c);
-
-
-        c.gridx = 6;
-        c.gridy = 6;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.ipady = 10;
-        JButton saveButton = new JButton("Save");
-        pane.add(saveButton, c);
-
-        popUp.setVisible(true);
-	}
+public class AddTaskView implements ActionListener {
 	
+	public AddTaskView adv = this;
+	public JFrame popUp = null;
+	public JTextField jtaskname = null;
+	public JTextField jtaskcat = null;
+	public JComboBox jtaskpri = null;
+	public JDateChooser dcstart = null;
+	public JDateChooser dcend = null;
+	public JTextField jhour = null;
+	public JTextField jmin = null;
+	public JTextField jendhour = null;
+	public JTextField jendmin = null;
+
+	public AddTaskView() {
+
+		// creation of a new frame
+		popUp = new JFrame();
+		popUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		popUp.pack();
+		popUp.setResizable(false);
+		popUp.setSize(600, 300); // setting the size of the frame
+		popUp.setTitle("Add a new task"); // the title of the window
+		Container pane = popUp.getContentPane();
+		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
+		// pane.setLayout(new GridLayout(0,2)); //only two objects can be in
+		// each row
+
+		// Top panel for task name, task category, task priority
+		JPanel toppanel = new JPanel();
+
+		// Panel for task name
+		JPanel namepanel = new JPanel();
+		namepanel.setLayout(new FlowLayout());
+		// Label
+		JLabel lTaskName = new JLabel("Task name"); // label task name
+		namepanel.add(lTaskName); // adding the label task name
+
+		// Text Field
+		jtaskname = new JTextField(40);
+		jtaskname.setText("mytask");
+		namepanel.add(jtaskname); // adding the text area
+
+		// Panel for category and priority
+		JPanel catandpriority = new JPanel();
+		// Category panel
+		JPanel pcat = new JPanel();
+		pcat.setLayout(new FlowLayout());
+		JLabel ltaskcat = new JLabel("Category");
+		jtaskcat = new JTextField(17);
+		pcat.add(ltaskcat);
+		pcat.add(jtaskcat);
+		// Priority Panel
+		JPanel ppriority = new JPanel();
+		ppriority.setLayout(new FlowLayout());
+		JLabel ltaskpri = new JLabel("Priority");
+		
+		
+		String[] priStrings = { "High", "Normal", "Low" };
+		jtaskpri = new JComboBox(priStrings);
+		jtaskpri.setSelectedIndex(1);
+		jtaskpri.addActionListener(this);
+		
+		ppriority.add(ltaskpri);
+		ppriority.add(jtaskpri);
+
+		catandpriority.setLayout(new FlowLayout());
+		catandpriority.add(ppriority);
+		catandpriority.add(pcat);
+
+		toppanel.add(namepanel, BorderLayout.PAGE_START);
+		toppanel.add(catandpriority, BorderLayout.PAGE_END);
+
+		pane.add(toppanel);
+
+		// Panel for DatePicker
+		JPanel ptasktime = new JPanel();
+		ptasktime.setLayout(new GridLayout(0,2));
+
+		// Panel For Start Time
+		JPanel pStartpanel = new JPanel();
+		pStartpanel.setLayout(new BoxLayout(pStartpanel, BoxLayout.Y_AXIS));
+
+		JPanel p1 = new JPanel();
+		p1.setLayout(new FlowLayout());
+		JLabel lstartdate = new JLabel("Start Date");
+		dcstart = new JDateChooser();
+		p1.add(lstartdate);
+		p1.add(dcstart);
+
+		JPanel p2 = new JPanel();
+		p2.setLayout(new FlowLayout());
+		JLabel lstarttime = new JLabel("Start time");
+		jhour = new JTextField(2);
+		JLabel maohao = new JLabel(":");
+		jmin = new JTextField(2);
+		p2.add(lstarttime);
+		p2.add(jhour);
+		p2.add(maohao);
+		p2.add(jmin);
+
+		pStartpanel.add(p1);
+		pStartpanel.add(p2);
+
+		JPanel pEndpanel = new JPanel();
+		pEndpanel.setLayout(new BoxLayout(pEndpanel, BoxLayout.Y_AXIS));
+
+		JPanel ep1 = new JPanel();
+		ep1.setLayout(new FlowLayout());
+		JLabel lenddate = new JLabel("End Date");
+		dcend = new JDateChooser();
+		ep1.add(lenddate);
+		ep1.add(dcend);
+
+		JPanel ep2 = new JPanel();
+		ep2.setLayout(new FlowLayout());
+		JLabel lendtime = new JLabel("End time");
+		jendhour = new JTextField(2);
+		JLabel maohaoend = new JLabel(":");
+		jendmin = new JTextField(2);
+		ep2.add(lendtime);
+		ep2.add(jendhour);
+		ep2.add(maohaoend);
+		ep2.add(jendmin);
+
+		pEndpanel.add(ep1);
+		pEndpanel.add(ep2);
+
+		ptasktime.add(pStartpanel, BorderLayout.LINE_START);
+		ptasktime.add(pEndpanel, BorderLayout.LINE_END);
+		// dateChooser.setBounds(20, 20, 200, 20);
+		
+		pane.add(ptasktime);
+
+		// create a button to save the task
+		JPanel buttonpanel = new JPanel();
+		buttonpanel.setLayout(new GridLayout(0,2));
+		JButton saveButton = new JButton("Save");
+		JButton cancelButton = new JButton("Cancel");
+		buttonpanel.add(cancelButton); // adding the button
+		buttonpanel.add(saveButton);
+		
+		pane.add(buttonpanel);
+		
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popUp.setVisible(false);
+			}
+		});
+
+		// add an action to the save button
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainController.getInstance().saveTaskClicked(adv);
+			}
+		});
+
+		// keep the window visible
+		popUp.setVisible(true);
+
+	}
+
+	public static void main(String[] args) {
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			public void run() {
+				AddTaskView a = new AddTaskView();
+
+			}
+		});
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
