@@ -24,9 +24,8 @@ import org.joda.time.format.DateTimeFormatter;
  * MainController is the class that will controll the whole program
  *	There can only be 1 instance of this class.
  */
-
 public class MainController {
-	
+
 	private static MainController instance = null;
 	private int height = 0;
 	private int width = 0;
@@ -35,8 +34,8 @@ public class MainController {
 	private String language = "en";
 	private String country = "US";
 	private static MainLayout test;
-	
-	 
+
+
 
 
 	public static synchronized MainController getInstance() {
@@ -49,11 +48,9 @@ public class MainController {
 		}
 		return instance;
 	}
-
 	/*
 	 * This is the main for the program.
 	 */
-
 	public static void main(String[] args) {
 		test = new MainLayout();
 		/*SwingUtilities.invokeLater(new Runnable() {
@@ -64,7 +61,7 @@ public class MainController {
 			}
 		});*/
 	}
-	
+
 	/**
 	 * ReloadGui closes the old window and starts up a new.
 	 * @author Jesper Andersson
@@ -73,9 +70,9 @@ public class MainController {
 		test.setVisible(false); //you can't see me!
 		test.dispose();
 		test = new MainLayout();
-		
+
 	}
-	
+
 	/**
 	 * Load tasks from db and show in the tasklistview
 	 * @param tasklistview
@@ -93,7 +90,7 @@ public class MainController {
 		tlview.taskpanel.add(tlview.tlist);
 			*/
 	}
-	
+
 	/*
 	 * 
 	 * Getters
@@ -138,7 +135,7 @@ public class MainController {
 		this.language = language;
 		this.country = country;
 	}
-	
+
 	/**
 	 * LoadConfig takes all the variables from the property file and saves them into the corresponding variable.
 	 * @author Jesper Andersson
@@ -189,31 +186,31 @@ public class MainController {
 				e.printStackTrace();
 			}
 		}
-
-	public void saveTaskClicked(AddTaskView adv) {
-		String temp = adv.jtaskname.getText() + "\n" + adv.jtaskcat.getText() + "\n" + adv.jtaskpri.getSelectedItem().toString() + "\n" + 
-				((JTextField)adv.dcstart.getDateEditor().getUiComponent()).getText() + "\n" + ((JTextField)adv.dcend.getDateEditor().getUiComponent()).getText() + 
-				"\n" + adv.jhour.getText() + " : " + adv.jmin.getText() + "\n" + adv.jendhour.getText() + " : " + adv.jendmin.getText();
-		System.out.println(temp);
 		
-		String taskName = adv.jtaskname.getText();
-		String taskCategory = adv.jtaskcat.getText();
-		DateTime createdDt = DateTime.now();
-		DateTime updatedDt = DateTime.now();
-		Boolean isDone = false;
-		Boolean isDeleted = false;
-		String priority = adv.jtaskpri.getSelectedItem().toString();
-		Integer progress = 0;
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-		String sstartDt = ((JTextField)adv.dcstart.getDateEditor().getUiComponent()).getText() + " " + adv.jhour.getText() + ":" + adv.jmin.getText() + ":00";
-		DateTime startDt = formatter.parseDateTime(sstartDt);
-		String sendDt = ((JTextField)adv.dcend.getDateEditor().getUiComponent()).getText() + " " + adv.jendhour.getText() + ":" + adv.jendmin.getText() + ":00";
-		DateTime endDt = formatter.parseDateTime(sendDt);
+		public void saveTaskClicked(AddTaskView adv) {
+			String temp = adv.jtaskname.getText() + "\n" + adv.jtaskcat.getText() + "\n" + adv.jtaskpri.getSelectedItem().toString() + "\n" + 
+					((JTextField)adv.dcstart.getDateEditor().getUiComponent()).getText() + "\n" + ((JTextField)adv.dcend.getDateEditor().getUiComponent()).getText() + 
+					"\n" + adv.jhour.getText() + " : " + adv.jmin.getText() + "\n" + adv.jendhour.getText() + " : " + adv.jendmin.getText();
+			System.out.println(temp);
+			
+			String taskName = adv.jtaskname.getText();
+			String taskCategory = adv.jtaskcat.getText();
+			DateTime createdDt = DateTime.now();
+			DateTime updatedDt = DateTime.now();
+			Boolean isDone = false;
+			Boolean isDeleted = false;
+			String priority = adv.jtaskpri.getSelectedItem().toString();
+			Integer progress = 0;
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+			String sstartDt = ((JTextField)adv.dcstart.getDateEditor().getUiComponent()).getText() + " " + adv.jhour.getText() + ":" + adv.jmin.getText() + ":00";
+			DateTime startDt = formatter.parseDateTime(sstartDt);
+			String sendDt = ((JTextField)adv.dcend.getDateEditor().getUiComponent()).getText() + " " + adv.jendhour.getText() + ":" + adv.jendmin.getText() + ":00";
+			DateTime endDt = formatter.parseDateTime(sendDt);
+			
+			TaskList.getInstance().addTask(taskName, taskCategory, createdDt, updatedDt, isDone, isDeleted, priority, null, startDt, endDt, progress);
+			
+			adv.popUp.setVisible(false);
+		}
 		
-		TaskList.getInstance().addTask(taskName, taskCategory, createdDt, updatedDt, isDone, isDeleted, priority, null, startDt, endDt, progress);
-		
-		adv.popUp.setVisible(false);
-	}
-	
 
 }
