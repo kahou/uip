@@ -1,19 +1,19 @@
 package userinterface;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
+/**
+ * This class is the main menu that contains the items that you can see in the menu.
+ * @author Jesper Andersson
+ * 
+ */
 public class MainMenu extends JMenuBar{
 	JPanel mainPane;
 	JMenuBar menubar;
@@ -28,6 +28,11 @@ public class MainMenu extends JMenuBar{
 	JMenuItem lfMetal;
 	JMenuItem lfSystem;
 	
+	/**
+	 * The constructor for MainMenu
+	 * @author Jesper Andersson
+	 * @param messages - The resourceBundle that contains our supported languages.
+	 */
 	public MainMenu(ResourceBundle messages){
 		
 
@@ -37,13 +42,15 @@ public class MainMenu extends JMenuBar{
 		menuSettings = new JMenu(messages.getString("Window"));
 		menuLookandfeel = new JMenu(messages.getString("Look and Feel"));
 		
-		settingsChangeLanguage = new JMenu("Change Language");
+		settingsChangeLanguage = new JMenu(messages.getString("ChangeLang"));
 		ImageIcon changeLangIcon = new ImageIcon("n");
+		
 		MenuAction LangEnAct = new MenuAction(messages.getString("ChangeToEn"),changeLangIcon,"Change Language to English.",1);
 		languageEN = new JMenuItem(LangEnAct);
 
 		MenuAction LangSvAct = new MenuAction(messages.getString("ChangeToSv"),changeLangIcon,"Change Language to Swedish.",2);	
 		languageSV = new JMenuItem(LangSvAct);
+
 		languageCN = new JMenuItem("Change to Chinese");
 		
 		ImageIcon changeLFIcon = new ImageIcon("lf");
@@ -60,6 +67,9 @@ public class MainMenu extends JMenuBar{
 		languageCN.getAccessibleContext().setAccessibleDescription("Press this button to change language to English.");
 		lfMetal.getAccessibleContext().setAccessibleDescription("Change Look and Feel to Metal.");
 		lfSystem.getAccessibleContext().setAccessibleDescription("Change Look and Feel to System.");
+		
+		MenuAction LangZhAct = new MenuAction(messages.getString("ChangeToZh"),changeLangIcon,"Change Language to Chinese.",3);
+		languageCN = new JMenuItem(LangZhAct);
 		
 
 		this.add(menuFile);

@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +19,12 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+/**
+ * 
+ * MainController is the class that will controll the whole program
+ *	There can only be 1 instance of this class.
+ */
+
 public class MainController {
 	
 	private static MainController instance = null;
@@ -27,6 +34,8 @@ public class MainController {
 	private int inlineTop = 0;
 	private String language = "en";
 	private String country = "US";
+	private static MainLayout test;
+	
 	 
 
 
@@ -40,16 +49,49 @@ public class MainController {
 		}
 		return instance;
 	}
-	
-	public static void main(String[] args) {
 
-		SwingUtilities.invokeLater(new Runnable() {
+	/*
+	 * This is the main for the program.
+	 */
+
+	public static void main(String[] args) {
+		test = new MainLayout();
+		/*SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
 				MainLayout layout = new MainLayout();
 
 			}
-		});
+		});*/
+	}
+	
+	/**
+	 * ReloadGui closes the old window and starts up a new.
+	 * @author Jesper Andersson
+	 */
+	public void ReloadGui(){
+		test.setVisible(false); //you can't see me!
+		test.dispose();
+		test = new MainLayout();
+		
+	}
+	
+	/**
+	 * Load tasks from db and show in the tasklistview
+	 * @param tasklistview
+	 */
+	public void loadandshowTaskList(TaskListView tlview) {
+		//Get tasklist
+		TaskList tasklist = TaskList.getInstance();
+		//Load to list model
+        /*
+		for(int i=0; i<tasklist.getListSize(); i++) {
+			tlview.model.addElement(tasklist.getTaskByIndex(i).getTaskName());
+		}
+		//Init tasklist
+		tlview.tlist.setModel(tlview.model);
+		tlview.taskpanel.add(tlview.tlist);
+			*/
 	}
 	
 	/*
@@ -97,7 +139,10 @@ public class MainController {
 		this.country = country;
 	}
 	
-	
+	/**
+	 * LoadConfig takes all the variables from the property file and saves them into the corresponding variable.
+	 * @author Jesper Andersson
+	 */
 	public void LoadConfig() {
 
 		File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
@@ -120,6 +165,10 @@ public class MainController {
 		}
 	}
 	// Saves the current position and size of the window
+	/**
+	 * SaveConfig takes all the variables and saves them to the property.
+	 * @author Jesper Andersson
+	 */
 		public void SaveConfig() {
 			File configFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"config.properties");
 			try {

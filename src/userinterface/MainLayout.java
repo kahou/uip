@@ -49,19 +49,10 @@ public class MainLayout extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane();
 
 		JPanel mainPane = new JPanel();
-	
-		JMenuBar menubar = new JMenuBar();
-		JMenu file = new JMenu("File");
-		JMenu file2 = new JMenu("Edit");
-		JMenu file3 = new JMenu("Window");
-		// JPanel taskList = new JPanel();
+		
 		
 		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.LINE_AXIS));
 
-		menubar.add(file);
-		menubar.add(file2);
-		menubar.add(file3);
-		setJMenuBar(menubar);
 		
 		window.add(menubar, BorderLayout.NORTH);
 
