@@ -116,6 +116,11 @@ public class Task {
 		return this.endTime;
 	}
 	
+	public Object[] getTaskAsArray(){
+		Object[] temp = {taskId, taskName, taskCategory, priority, isDone, startTime, endTime};
+		return temp;
+	}
+	
 	/*
 	 * Setters
 	 */
