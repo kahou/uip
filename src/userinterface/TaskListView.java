@@ -75,6 +75,7 @@ public class TaskListView extends JPanel implements ActionListener {
                     int index = list.locationToIndex(e.getPoint());
                     int listIndex = index+1;
                     System.out.println("Double clicking item " + listIndex + " with name: " + tasks.getTaskByIndex(index).getTaskName());
+                    DetailTaskView dt = new DetailTaskView(tasks.getTaskByIndex(index));
                     // TODO Implement detail window here
                 } else if (SwingUtilities.isRightMouseButton(e)) {
                     list.setSelectedIndex(list.locationToIndex(e.getPoint()));
@@ -83,6 +84,7 @@ public class TaskListView extends JPanel implements ActionListener {
             }
         };
         list.addMouseListener(listener);
+
 
         JScrollPane scrollPane = new JScrollPane(list,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,

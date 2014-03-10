@@ -30,7 +30,7 @@ class MenuAction extends AbstractAction {
        else if(type.equals(3)){ controller.setNewLanguage("zh", "CN"); controller.SaveConfig(); controller.ReloadGui();}
        else if (type.equals(4)){
     	   Description description = new Description();
-    	   description.setSize(300, 250);
+    	   //description.setSize(300, 250);
     	   description.show();
        }
        else if(type.equals(1337)){new AddTaskView();}
