@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.swing.Box;
@@ -72,7 +71,7 @@ public class TaskListView extends JPanel implements ActionListener {
 	 * Generates a panel with buttons for creating and scrollbox for sorting
 	 * tasks
 	 * 
-	 * @return A panel with buttons, labe	ls and scrollboxes.
+	 * @return A panel with buttons, labe ls and scrollboxes.
 	 */
 	private JPanel setupTaskList() {
 		JPanel tempPanel = new JPanel(new GridBagLayout());
@@ -94,7 +93,19 @@ public class TaskListView extends JPanel implements ActionListener {
 			}
 		});
 
+		final TaskList newList = TaskList.getInstance();
+		// newList.addTask("testName", "home", DateTime.now(), DateTime.now(),
+		// false, false, 1, "timed", DateTime.now(), DateTime.now());
+		JButton detailedTask = new JButton("detailed Task");
+		detailedTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DetailedTaskView et = new DetailedTaskView(newList
+						.getTaskByIndex(0));
+			}
+		});
+
 		tempPanel.add(newTask, c);
+		tempPanel.add(detailedTask, c);
 
 		/**
 		 * Create and set the constraints for the "Sort by" label. Add the label
@@ -147,10 +158,12 @@ public class TaskListView extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-	public void saveData (AddTaskView addTask){
+
+	public void saveData(AddTaskView addTask) {
 		TaskList t1 = new TaskList();
-		//AddTaskView task = new AddTaskView();
-		//String tn = AddTaskView.text1.getText();
-		t1.addTask("tname", "category", new DateTime(), new DateTime(), false, false, 0, "type",new DateTime(),new DateTime());
-		}
+		// AddTaskView task = new AddTaskView();
+		// String tn = AddTaskView.text1.getText();
+		t1.addTask("tname", "category", new DateTime(), new DateTime(), false,
+				false, 0, "type", new DateTime(), new DateTime());
+	}
 }
