@@ -148,6 +148,7 @@ public class CalendarView extends JPanel implements ActionListener {
 		  panelTable.add(tableHeader);
 		  panelTable.add(calTable);
 		  pane.add(panelTable);
+          tableUpdate();
 	}
 
 	/**
@@ -194,15 +195,14 @@ public class CalendarView extends JPanel implements ActionListener {
 						//check year																					//Joda Time months start at 1 but Calendar months start at 0, thus the + 1
 						if(taskList.getTaskByIndex(i).getStartTime().getYear() == calDate.get(Calendar.YEAR)){
 							int tempNum = 0;
-							if(monthTasks.containsKey(i)){
-								tempNum = monthTasks.get(i) + 1;
+							if(monthTasks.containsKey(taskList.getTaskByIndex(i).getStartTime().getDayOfMonth())){
+								tempNum = monthTasks.get(taskList.getTaskByIndex(i).getStartTime().getDayOfMonth()) + 1;
 							}
 							else{
 								tempNum = 1;
 							}
 							monthTasks.put(taskList.getTaskByIndex(i).getStartTime().getDayOfMonth(), tempNum);
 						}
-
 					}
 				}
 			}

@@ -7,3 +7,4 @@
 .idea/*
 UIP.iml
 src/config.properties
+out/artifacts/*

@@ -74,7 +74,7 @@ public class MainLayout extends JFrame {
 
 		// add TaskListView and calendar here
 		mainPane.add(tasklist1);
-		mainPane.add(new CalendarView());
+		mainPane.add(new CalendarView(messages));
 
 		/*
 		 * JButton changeLanguage = new JButton("Change Language");
