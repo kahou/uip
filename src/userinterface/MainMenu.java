@@ -24,6 +24,8 @@ public class MainMenu extends JMenuBar{
 	JMenuItem languageEN;
 	JMenuItem languageSV;
 	JMenuItem languageCN;
+	JMenu menuHelp;
+	JMenuItem helpDescription;
 	
 	/**
 	 * The constructor for MainMenu
@@ -37,6 +39,7 @@ public class MainMenu extends JMenuBar{
 		menuFile = new JMenu(messages.getString("File"));
 		menuEdit = new JMenu(messages.getString("Edit"));
 		menuSettings = new JMenu(messages.getString("Window"));
+		menuHelp = new JMenu(messages.getString("Help"));
 		
 		settingsChangeLanguage = new JMenu(messages.getString("ChangeLang"));
 		ImageIcon changeLangIcon = new ImageIcon("n");
@@ -50,10 +53,15 @@ public class MainMenu extends JMenuBar{
 		MenuAction LangZhAct = new MenuAction(messages.getString("ChangeToZh"),changeLangIcon,"Change Language to Chinese.",3);
 		languageCN = new JMenuItem(LangZhAct);
 		
-
+		MenuAction descAct = new MenuAction(messages.getString("Description"),changeLangIcon,"Description",4);
+		helpDescription = new JMenuItem(descAct);
+		
+		
 		this.add(menuFile);
 		this.add(menuEdit);
 		this.add(menuSettings);
+		this.add(menuHelp);
+		menuHelp.add(helpDescription);
 		menuSettings.add(settingsChangeLanguage);
 		settingsChangeLanguage.add(languageEN);
 		settingsChangeLanguage.add(languageSV);

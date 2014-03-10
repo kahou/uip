@@ -59,4 +59,15 @@ public class TaskList {
 	public List<Task> getTaskList() {
 		return taskList;
 	}
+	
+	public Object[][] getTaskListAsObjectArray(){
+		
+		Object[][] arrayen = new Object[taskList.size()][7];
+		//Object[][] arrayen = new Object[][](null);
+		for(int i=0; i<taskList.size(); i++){
+			arrayen[i] = taskList.get(i).getTaskAsArray();
+		}
+		
+		return arrayen;
+	}
 }
