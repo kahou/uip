@@ -5,13 +5,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import com.sun.javadoc.Type;
-
 import controller.MainController;
+
 /**
- * MenuAction is an abstractAction class that handles all the actions for the menu.
+ * MenuAction is an abstractAction class that handles all the actions for the
+ * menu.
+ * 
  * @author Jesper Andersson
- *
+ * 
  */
 class MenuAction extends AbstractAction {
 	MainController controller = MainController.getInstance();
@@ -35,6 +36,5 @@ class MenuAction extends AbstractAction {
        else if(type.equals(1337)){new AddTaskView();}
        
     }
-    
-	
+
 }
