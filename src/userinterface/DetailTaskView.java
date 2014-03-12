@@ -56,7 +56,7 @@ public class DetailTaskView implements ActionListener {
 
     private String taskName;
     private String taskCategory;
-    private int taskPriority;
+    private String taskPriority;
 
     public DetailTaskView(Task inputTask) {
 

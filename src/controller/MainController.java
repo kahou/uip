@@ -24,7 +24,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * 
- * MainController is the class that will controll the whole program
+ * MainController is the class that will control the whole program
  *	There can only be 1 instance of this class.
  */
 public class MainController {
@@ -36,11 +36,13 @@ public class MainController {
 	private int inlineTop = 0;
 	private String language = "en";
 	private String country = "US";
-	private static MainLayout test;
+	private static MainLayout mainLayout;
+	
 	private String lAndF = null;
 	private String theme = null;
 
 
+	private TaskList taskList = TaskList.getInstance();
 
 
 	public static synchronized MainController getInstance() {
@@ -57,7 +59,7 @@ public class MainController {
 	 * This is the main for the program.
 	 */
 	public static void main(String[] args) {
-		test = new MainLayout();
+		mainLayout = new MainLayout();
 		/*SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
@@ -72,10 +74,11 @@ public class MainController {
 	 * @author Jesper Andersson
 	 */
 	public void ReloadGui(){
-		test.setVisible(false); //you can't see me!
-		test.dispose();
-		test = new MainLayout();
-
+		MainLayout temp = new MainLayout();
+		mainLayout.setVisible(false); //you can't see me!
+		mainLayout.dispose();
+		mainLayout = temp;
+		
 	}
 
 	/**
@@ -122,6 +125,7 @@ public class MainController {
 	public int getInlineLeft() {
 		return this.inlineLeft;
 	}
+
 	
 	public String getLookandfeel() {
 		return this.lAndF;
@@ -129,6 +133,11 @@ public class MainController {
 	
 	public String getTheme() {
 		return this.theme;
+	}
+
+	public TaskList getTaskList(){
+		return taskList;
+		
 	}
 
 	/*
