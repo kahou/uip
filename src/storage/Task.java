@@ -119,8 +119,15 @@ public class Task {
 		return this.endTime;
 	}
 	
+
 	public int getProgress() {
 		return this.progress;
+	}
+
+	public Object[] getTaskAsArray(){
+		Object[] temp = {taskId, taskName, taskCategory, priority, isDone, startTime, endTime};
+		return temp;
+
 	}
 	
 	/*

@@ -14,6 +14,9 @@ import userinterface.MainLayout;
 import userinterface.TaskListView;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.DefaultMetalTheme;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.OceanTheme;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -21,7 +24,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * 
- * MainController is the class that will controll the whole program
+ * MainController is the class that will control the whole program
  *	There can only be 1 instance of this class.
  */
 public class MainController {
@@ -33,9 +36,13 @@ public class MainController {
 	private int inlineTop = 0;
 	private String language = "en";
 	private String country = "US";
-	private static MainLayout test;
+	private static MainLayout mainLayout;
+	
+	private String lAndF = null;
+	private String theme = null;
 
 
+	private TaskList taskList = TaskList.getInstance();
 
 
 	public static synchronized MainController getInstance() {
@@ -52,7 +59,7 @@ public class MainController {
 	 * This is the main for the program.
 	 */
 	public static void main(String[] args) {
-		test = new MainLayout();
+		mainLayout = new MainLayout();
 		/*SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
@@ -67,10 +74,11 @@ public class MainController {
 	 * @author Jesper Andersson
 	 */
 	public void ReloadGui(){
-		test.setVisible(false); //you can't see me!
-		test.dispose();
-		test = new MainLayout();
-
+		MainLayout temp = new MainLayout();
+		mainLayout.setVisible(false); //you can't see me!
+		mainLayout.dispose();
+		mainLayout = temp;
+		
 	}
 
 	/**
@@ -118,6 +126,20 @@ public class MainController {
 		return this.inlineLeft;
 	}
 
+	
+	public String getLookandfeel() {
+		return this.lAndF;
+	}
+	
+	public String getTheme() {
+		return this.theme;
+	}
+
+	public TaskList getTaskList(){
+		return taskList;
+		
+	}
+
 	/*
 	 * 
 	 * Setters
@@ -154,6 +176,8 @@ public class MainController {
 			this.inlineTop = Integer.parseInt(props.getProperty("inlineTop"));
 			this.language = props.getProperty("language");
 			this.country = props.getProperty("country");
+			this.lAndF = props.getProperty("lookandfeel");
+			this.theme = props.getProperty("theme");
 			reader.close();
 		} catch (FileNotFoundException ex) {
 			// file does not exist
@@ -176,6 +200,8 @@ public class MainController {
 				props.setProperty("inlineTop", Integer.toString(this.inlineTop));
 				props.setProperty("inlineLeft", Integer.toString(this.inlineLeft));
 				props.setProperty("language", language);
+				props.setProperty("lookandfeel", lAndF);
+				props.setProperty("theme", theme);
 				props.setProperty("country", country);
 				props.store(out, "");
 			} catch (FileNotFoundException e) {
@@ -210,7 +236,74 @@ public class MainController {
 			TaskList.getInstance().addTask(taskName, taskCategory, createdDt, updatedDt, isDone, isDeleted, priority, null, startDt, endDt, progress);
 			
 			adv.popUp.setVisible(false);
+			this.ReloadGui();
 		}
 		
+		
+		public void initLookAndFeel(String landf, String theme) {
+			String lookAndFeel = null;
+			
+			if (theme == null) {
+				theme = "Default";
+			}
+			
+			this.lAndF = landf;
+			this.theme = theme;
+			this.SaveConfig();
 
+			if (landf != null && !landf.equals("Default")) {
+				if (landf.equals("Metal")) {
+					lookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
+				}
+				else if (landf.equals("System")) {
+					lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+				}
+				else if (landf.equals("Motif")) {
+					lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+				}
+				else if (landf.equals("GTK")) {
+					lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+				}
+				else {
+					System.err.println("Unexpected value of lookandfeel specified: " + landf);
+					lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+				}
+
+				try {
+					UIManager.setLookAndFeel(lookAndFeel);
+
+					// If L&F = "Metal", set the theme
+					
+					if (landf.equals("Metal")) {
+						if (theme.equals("DefaultMetal")) {
+							MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
+						} else {
+							MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+						}
+						UIManager.setLookAndFeel(new MetalLookAndFeel());
+					}
+				}
+				catch (ClassNotFoundException e) {
+					System.err
+							.println("Couldn't find class for specified look and feel:"
+									+ lookAndFeel);
+					System.err
+							.println("Did you include the L&F library in the class path?");
+					System.err.println("Using the default look and feel.");
+				}
+				catch (UnsupportedLookAndFeelException e) {
+					System.err.println("Can't use the specified look and feel ("
+							+ lookAndFeel + ") on this platform.");
+					System.err.println("Using the default look and feel.");
+				}
+				catch (Exception e) {
+					System.err.println("Couldn't get specified look and feel ("
+							+ lookAndFeel + "), for some reason.");
+					System.err.println("Using the default look and feel.");
+					e.printStackTrace();
+				}
+			}
+			
+			
+		}
 }

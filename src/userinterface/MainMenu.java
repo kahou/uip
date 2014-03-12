@@ -22,11 +22,18 @@ public class MainMenu extends JMenuBar {
 	JMenu menuEdit;
 	JMenu menuSettings;
 	JMenu settingsChangeLanguage;
+	JMenu settingsLookandFeel;
 	JMenuItem languageEN;
 	JMenuItem languageSV;
 	JMenuItem languageCN;
+
 	JMenuItem lfMetal;
 	JMenuItem lfSystem;
+
+
+	JMenu menuHelp;
+	JMenuItem helpDescription;
+	
 
 	/**
 	 * The constructor for MainMenu
@@ -42,8 +49,16 @@ public class MainMenu extends JMenuBar {
 		menuEdit = new JMenu(messages.getString("Edit"));
 		menuSettings = new JMenu(messages.getString("Window"));
 
+
+
+		menuHelp = new JMenu(messages.getString("Help"));
+		
+
 		settingsChangeLanguage = new JMenu(messages.getString("ChangeLang"));
 		ImageIcon changeLangIcon = new ImageIcon("n");
+		
+		settingsLookandFeel = new JMenu(messages.getString("ChangeLookandfeel"));
+		ImageIcon changeLookandfeelIcon = new ImageIcon("n");
 
 		MenuAction LangEnAct = new MenuAction(messages.getString("ChangeToEn"),
 				changeLangIcon, "Change Language to English.", 1);
@@ -57,26 +72,31 @@ public class MainMenu extends JMenuBar {
 				changeLangIcon, "Change Language to Chinese.", 3);
 		languageCN = new JMenuItem(LangZhAct);
 		
-		/*
+
 		ImageIcon changeLFIcon = new ImageIcon("lf");
-		MenuAction LFMetalAct = new MenuAction(messages.getString("ChangeToMetal"),changeLFIcon,"Change L&F to Metal.",3);
+		MenuAction LFMetalAct = new MenuAction(messages.getString("ChangeToMetal"),changeLFIcon,"Change Look and Feel to Metal.",9);
 		lfMetal = new JMenuItem(LFMetalAct);
 		
-		MenuAction LFSystemAct = new MenuAction(messages.getString("ChangeToSystem"),changeLFIcon,"Change L&F to System.",4);
+		MenuAction LFSystemAct = new MenuAction(messages.getString("ChangeToSystem"),changeLFIcon,"Change Look and Feel to System.",10);
 		lfSystem = new JMenuItem(LFSystemAct);
 		
-		lfMetal.getAccessibleContext().setAccessibleDescription("Change Look and Feel to Metal.");
-		lfSystem.getAccessibleContext().setAccessibleDescription("Change Look and Feel to System."); */
 
+		MenuAction descAct = new MenuAction(messages.getString("Description"),changeLangIcon,"Description",4);
+		helpDescription = new JMenuItem(descAct);
+		
+		
 		this.add(menuFile);
 		this.add(menuEdit);
 		this.add(menuSettings);
+		this.add(menuHelp);
+		menuHelp.add(helpDescription);
 		menuSettings.add(settingsChangeLanguage);
 		settingsChangeLanguage.add(languageEN);
 		settingsChangeLanguage.add(languageSV);
 		settingsChangeLanguage.add(languageCN);
-		//menuSettings.add(lfMetal);
-		//menuSettings.add(lfSystem);
+		menuSettings.add(settingsLookandFeel);
+		settingsLookandFeel.add(menuSettings.add(lfMetal));
+		settingsLookandFeel.add(menuSettings.add(lfSystem));
 
 	}
 

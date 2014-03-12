@@ -40,14 +40,11 @@ import controller.MainController;
  */
 public class MainLayout extends JFrame {
 
-	JFrame window;
+	public JFrame window;
 	Internationlization internationlization;
 	int num = 0;
 	ResourceBundle messages;
 	MainController controller = MainController.getInstance();
-
-	final static String LOOKANDFEEL = "Metal";
-	final static String THEME = "Default";
 
 
 
@@ -64,16 +61,14 @@ public class MainLayout extends JFrame {
 
 		messages = internationlization2.getInternationlizationBundle();
 		
-		//Set the look and feel.
-        initLookAndFeel();
-        //Make sure we have nice window decorations.
-        JFrame.setDefaultLookAndFeelDecorated(true);
-		
-
 		window = this;
 		this.setLocation(controller.getInlineLeft(),controller.getInlineTop());
 		this.setSize(controller.getWidth(), controller.getHeight());
 
+		//Set the look and feel.
+        controller.initLookAndFeel(controller.getLookandfeel(),controller.getTheme());
+        //Make sure we have nice window decorations.
+        JFrame.setDefaultLookAndFeelDecorated(true);
 
 		//Menu initialization.
 		JPanel mainPane = new JPanel();
@@ -88,7 +83,7 @@ public class MainLayout extends JFrame {
 
 		// add TaskListView and calendar here
 		mainPane.add(tasklist1);
-		mainPane.add(new CalendarView());
+		mainPane.add(new CalendarView(messages));
 
 		/*
 		 * JButton changeLanguage = new JButton("Change Language");
@@ -97,12 +92,17 @@ public class MainLayout extends JFrame {
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab(messages.getString("calendar"), mainPane);
+		DetailedTaskView dTW = new DetailedTaskView(messages);
+		tabbedPane.addTab(messages.getString("detailedList"), dTW);
 
 		this.add(menubar, BorderLayout.NORTH);
 		this.add(tabbedPane);
+		
+		
 		this.setTitle(messages.getString("calendar"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		
 
 		this.addComponentListener(new ComponentListener() {
 			@Override
@@ -137,64 +137,5 @@ public class MainLayout extends JFrame {
 		});
 		
 	}
-
-	private static void initLookAndFeel() {
-		String lookAndFeel = null;
-
-		if (LOOKANDFEEL != null) {
-			if (LOOKANDFEEL.equals("Metal")) {
-				lookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
-			}
-			else if (LOOKANDFEEL.equals("System")) {
-				lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-			}
-			else if (LOOKANDFEEL.equals("Motif")) {
-				lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-			}
-			else if (LOOKANDFEEL.equals("GTK")) {
-				lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-			}
-			else {
-				System.err.println("Unexpected value of LOOKANDFEEL specified: " + LOOKANDFEEL);
-				lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-			}
-
-			try {
-				UIManager.setLookAndFeel(lookAndFeel);
-
-				// If L&F = "Metal", set the theme
-				if (LOOKANDFEEL.equals("Metal")) {
-					if (THEME.equals("DefaultMetal")) {
-						MetalLookAndFeel.setCurrentTheme(new DefaultMetalTheme());
-					} else {
-						MetalLookAndFeel.setCurrentTheme(new OceanTheme());
-					}
-					UIManager.setLookAndFeel(new MetalLookAndFeel());
-				}
-			}
-			catch (ClassNotFoundException e) {
-				System.err
-						.println("Couldn't find class for specified look and feel:"
-								+ lookAndFeel);
-				System.err
-						.println("Did you include the L&F library in the class path?");
-				System.err.println("Using the default look and feel.");
-			}
-			catch (UnsupportedLookAndFeelException e) {
-				System.err.println("Can't use the specified look and feel ("
-						+ lookAndFeel + ") on this platform.");
-				System.err.println("Using the default look and feel.");
-			}
-			catch (Exception e) {
-				System.err.println("Couldn't get specified look and feel ("
-						+ lookAndFeel + "), for some reason.");
-				System.err.println("Using the default look and feel.");
-				e.printStackTrace();
-			}
-		}
-	}
-
-
-
 
 }
