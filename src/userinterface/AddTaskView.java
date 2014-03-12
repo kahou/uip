@@ -1,170 +1,309 @@
 package userinterface;
 
-import javax.swing.*;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.Date;
 
-import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.JTextArea;
+import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import storage.TaskList;
+
+import com.standbysoft.component.date.swing.JDatePicker;
 
 import controller.MainController;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class AddTaskView implements ActionListener {
-	
-	public AddTaskView adv = this;
-	public JFrame popUp = null;
-	public JTextField jtaskname = null;
-	public JTextField jtaskcat = null;
-	public JComboBox jtaskpri = null;
-	public JDateChooser dcstart = null;
-	public JDateChooser dcend = null;
-	public JTextField jhour = null;
-	public JTextField jmin = null;
-	public JTextField jendhour = null;
-	public JTextField jendmin = null;
+
+	private JTextArea taskNameField;
+	private JTextArea taskCategoryField;
+	private JTextArea startTimeField;
+	private JTextArea endTimeField;
+	private JTextArea priorityField;
+	private Container pane;
+	private JFrame startDatePanel;
+	private JDatePicker startDatePicker;
+	private JSpinner startTimePicker;
+	private String startDateInput;
+	private String startTimeInput;
+	private JButton startTimeButton;
+	private DateTime startDt;
+
+	private JFrame endDatePanel;
+	private JDatePicker endDatePicker;
+	private JSpinner endTimePicker;
+	private String endDateInput;
+	private String endTimeInput;
+	private JButton endTimeButton;
+	private DateTime endDt;
+
+	private JSpinner priorityPicker;
+
+	private String taskName;
+	private String taskCategory;
+	private String taskPriority;
 
 	public AddTaskView() {
 
 		// creation of a new frame
-		popUp = new JFrame();
-		popUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame popUp = new JFrame();
 		popUp.pack();
 		popUp.setResizable(false);
-		popUp.setSize(600, 300); // setting the size of the frame
-		popUp.setTitle("Add a new task"); // the title of the window
-		Container pane = popUp.getContentPane();
-		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+		popUp.setSize(600, 400); // setting the size of the frame
+		popUp.setTitle("Detailed task view"); // the title of the window
+		pane = popUp.getContentPane();
 
-		// pane.setLayout(new GridLayout(0,2)); //only two objects can be in
-		// each row
+		pane.setLayout(new GridLayout(0, 2)); // only two objects can be in each
+		// row
 
-		// Top panel for task name, task category, task priority
-		JPanel toppanel = new JPanel();
+		JLabel TaskNameLabel = new JLabel("Task Name"); // label
+		// task
+		// name
+		pane.add(TaskNameLabel); // adding the label task name
 
-		// Panel for task name
-		JPanel namepanel = new JPanel();
-		namepanel.setLayout(new FlowLayout());
-		// Label
-		JLabel lTaskName = new JLabel("Task name"); // label task name
-		namepanel.add(lTaskName); // adding the label task name
+		// create text areas
+		taskNameField = new JTextArea("");
+		pane.add(taskNameField); // adding the text area
 
-		// Text Field
-		jtaskname = new JTextField(40);
-		jtaskname.setText("mytask");
-		namepanel.add(jtaskname); // adding the text area
+		// creation of the label task category
+		JLabel taskcategory = new JLabel("Task Category");
+		pane.add(taskcategory); // adding the label
 
-		// Panel for category and priority
-		JPanel catandpriority = new JPanel();
-		// Category panel
-		JPanel pcat = new JPanel();
-		pcat.setLayout(new FlowLayout());
-		JLabel ltaskcat = new JLabel("Category");
-		jtaskcat = new JTextField(17);
-		pcat.add(ltaskcat);
-		pcat.add(jtaskcat);
-		// Priority Panel
-		JPanel ppriority = new JPanel();
-		ppriority.setLayout(new FlowLayout());
-		JLabel ltaskpri = new JLabel("Priority");
-		
-		
-		String[] priStrings = { "High", "Normal", "Low" };
-		jtaskpri = new JComboBox(priStrings);
-		jtaskpri.setSelectedIndex(1);
-		jtaskpri.addActionListener(this);
-		
-		ppriority.add(ltaskpri);
-		ppriority.add(jtaskpri);
+		// create text areas
+		taskCategoryField = new JTextArea("");
+		pane.add(taskCategoryField); // adding the text area
 
-		catandpriority.setLayout(new FlowLayout());
-		catandpriority.add(ppriority);
-		catandpriority.add(pcat);
+		// creation of the label task start-time
+		JLabel startTime = new JLabel("Task Start Time");
+		pane.add(startTime); // adding the label
+		;
+		DateTimeFormatter fmt = DateTimeFormat
+				.forPattern("MMM d, yyyy HH:mm:ss");
 
-		toppanel.add(namepanel, BorderLayout.PAGE_START);
-		toppanel.add(catandpriority, BorderLayout.PAGE_END);
+		startTimeButton = new JButton("");
+		pane.add(startTimeButton); // adding the button
 
-		pane.add(toppanel);
-
-		// Panel for DatePicker
-		JPanel ptasktime = new JPanel();
-		ptasktime.setLayout(new GridLayout(0,2));
-
-		// Panel For Start Time
-		JPanel pStartpanel = new JPanel();
-		pStartpanel.setLayout(new BoxLayout(pStartpanel, BoxLayout.Y_AXIS));
-
-		JPanel p1 = new JPanel();
-		p1.setLayout(new FlowLayout());
-		JLabel lstartdate = new JLabel("Start Date");
-		dcstart = new JDateChooser();
-		p1.add(lstartdate);
-		p1.add(dcstart);
-
-		JPanel p2 = new JPanel();
-		p2.setLayout(new FlowLayout());
-		JLabel lstarttime = new JLabel("Start time");
-		jhour = new JTextField(2);
-		JLabel maohao = new JLabel(":");
-		jmin = new JTextField(2);
-		p2.add(lstarttime);
-		p2.add(jhour);
-		p2.add(maohao);
-		p2.add(jmin);
-
-		pStartpanel.add(p1);
-		pStartpanel.add(p2);
-
-		JPanel pEndpanel = new JPanel();
-		pEndpanel.setLayout(new BoxLayout(pEndpanel, BoxLayout.Y_AXIS));
-
-		JPanel ep1 = new JPanel();
-		ep1.setLayout(new FlowLayout());
-		JLabel lenddate = new JLabel("End Date");
-		dcend = new JDateChooser();
-		ep1.add(lenddate);
-		ep1.add(dcend);
-
-		JPanel ep2 = new JPanel();
-		ep2.setLayout(new FlowLayout());
-		JLabel lendtime = new JLabel("End time");
-		jendhour = new JTextField(2);
-		JLabel maohaoend = new JLabel(":");
-		jendmin = new JTextField(2);
-		ep2.add(lendtime);
-		ep2.add(jendhour);
-		ep2.add(maohaoend);
-		ep2.add(jendmin);
-
-		pEndpanel.add(ep1);
-		pEndpanel.add(ep2);
-
-		ptasktime.add(pStartpanel, BorderLayout.LINE_START);
-		ptasktime.add(pEndpanel, BorderLayout.LINE_END);
-		// dateChooser.setBounds(20, 20, 200, 20);
-		
-		pane.add(ptasktime);
-
-		// create a button to save the task
-		JPanel buttonpanel = new JPanel();
-		buttonpanel.setLayout(new GridLayout(0,2));
-		JButton saveButton = new JButton("Save");
-		JButton cancelButton = new JButton("Cancel");
-		buttonpanel.add(cancelButton); // adding the button
-		buttonpanel.add(saveButton);
-		
-		pane.add(buttonpanel);
-		
-		cancelButton.addActionListener(new ActionListener() {
+		// add an action to the save button
+		startTimeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				popUp.setVisible(false);
+
+				startDatePanel = new JFrame();
+				Container startDatePane;
+
+				startDatePanel.pack();
+				startDatePanel.setResizable(false);
+				startDatePanel.setSize(200, 100); // setting the size of the
+				// frame
+				startDatePanel.setTitle("Detailed task view"); // the title of
+				// the
+				startDatePane = startDatePanel.getContentPane();
+
+				startDatePane.setLayout(new GridLayout(0, 2)); // only two
+				// objects can
+				// be in each
+				// row
+				// window
+
+				startDatePicker = new JDatePicker(false);
+				startDatePanel.add(startDatePicker);
+
+				SpinnerModel model = new SpinnerDateModel();
+				startTimePicker = new JSpinner(model);
+				JComponent editor = new JSpinner.DateEditor(startTimePicker,
+						"HH:mm:ss");
+				startTimePicker.setEditor(editor);
+
+				startDatePanel.add(startTimePicker);
+
+				JButton startTimeSaveButton = new JButton("Save");
+				startDatePanel.add(startTimeSaveButton); // adding the button
+				startTimeSaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						startDateInput = startDatePicker
+								.getSelectedDateAsText();
+						System.out.println(startDateInput);
+
+						try {
+							startTimePicker.commitEdit();
+						} catch (ParseException pe) {
+							// Edited value is invalid, spinner.getValue() will
+							// return
+							// the last valid value, you could revert the
+							// spinner to show that:
+							JComponent editor = startTimePicker.getEditor();
+							if (editor instanceof DefaultEditor) {
+								((DefaultEditor) editor).getTextField()
+										.setValue(startTimePicker.getValue());
+							}
+							// reset the value to some known value:
+							// startTimePicker.setValue(fallbackValue);
+							// or treat the last valid value as the current, in
+							// which
+							// case you don't need to do anything.
+						}
+
+						Date newDate = (Date) startTimePicker.getValue();
+						newDate.getHours();
+						startTimeInput = Integer.toString(newDate.getHours())
+								+ ":" + Integer.toString(newDate.getMinutes())
+								+ ":" + Integer.toString(newDate.getSeconds());
+						System.out.println(startTimeInput);
+
+						startTimeButton.setText(startDateInput + " "
+								+ startTimeInput);
+						DateTimeFormatter formatter = DateTimeFormat
+								.forPattern("MMM d, yyyy HH:mm:ss");
+						startDt = formatter.parseDateTime(startDateInput + " "
+								+ startTimeInput);
+
+						startDatePanel.setVisible(false);
+
+					}
+				});
+
+				JButton cancelTimeSaveButton = new JButton("Cancel");
+				startDatePanel.add(cancelTimeSaveButton); // adding the button
+				cancelTimeSaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						startDatePanel.setVisible(false);
+					}
+				});
+
+				startDatePanel.setVisible(true);
+
 			}
 		});
+
+		// creation of the label task end-time
+		JLabel endTime = new JLabel("Task End Time");
+		pane.add(endTime); // adding the label
+
+		endTimeButton = new JButton("");
+		pane.add(endTimeButton); // adding the button
+
+		// add an action to the save button
+		endTimeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				endDatePanel = new JFrame();
+				Container endDatePane;
+
+				endDatePanel.pack();
+				endDatePanel.setResizable(false);
+				endDatePanel.setSize(200, 100); // setting the size of the frame
+				endDatePanel.setTitle("Detailed task view"); // the title of the
+				endDatePane = endDatePanel.getContentPane();
+
+				endDatePane.setLayout(new GridLayout(0, 2)); // only two
+				// objects can
+				// be in each
+				// row
+				// window
+
+				endDatePicker = new JDatePicker(false);
+				endDatePanel.add(endDatePicker);
+
+				SpinnerModel model = new SpinnerDateModel();
+				endTimePicker = new JSpinner(model);
+				JComponent editor = new JSpinner.DateEditor(endTimePicker,
+						"HH:mm:ss");
+				endTimePicker.setEditor(editor);
+
+				endDatePanel.add(endTimePicker);
+
+				JButton endTimeSaveButton = new JButton("Save");
+				endDatePanel.add(endTimeSaveButton); // adding the button
+				endTimeSaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						endDateInput = endDatePicker.getSelectedDateAsText();
+						System.out.println(endDateInput);
+
+						try {
+							endTimePicker.commitEdit();
+						} catch (ParseException pe) {
+							// Edited value is invalid, spinner.getValue() will
+							// return
+							// the last valid value, you could revert the
+							// spinner to show that:
+							JComponent editor = endTimePicker.getEditor();
+							if (editor instanceof DefaultEditor) {
+								((DefaultEditor) editor).getTextField()
+										.setValue(endTimePicker.getValue());
+							}
+							// reset the value to some known value:
+							// startTimePicker.setValue(fallbackValue);
+							// or treat the last valid value as the current, in
+							// which
+							// case you don't need to do anything.
+						}
+
+						Date newDate = (Date) endTimePicker.getValue();
+						newDate.getHours();
+						endTimeInput = Integer.toString(newDate.getHours())
+								+ ":" + Integer.toString(newDate.getMinutes())
+								+ ":" + Integer.toString(newDate.getSeconds());
+						System.out.println(endTimeInput);
+
+						endTimeButton
+								.setText(endDateInput + " " + endTimeInput);
+
+						DateTimeFormatter formatter = DateTimeFormat
+								.forPattern("MMM d, yyyy HH:mm:ss");
+						endDt = formatter.parseDateTime(endDateInput + " "
+								+ endTimeInput);
+
+						endDatePanel.setVisible(false);
+
+					}
+				});
+
+				JButton cancelTimeSaveButton = new JButton("Cancel");
+				endDatePanel.add(cancelTimeSaveButton); // adding the button
+				cancelTimeSaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						endDatePanel.setVisible(false);
+					}
+				});
+
+				endDatePanel.setVisible(true);
+
+			}
+		});
+
+		// creation of the label task description
+		JLabel priority = new JLabel("Priority");
+		pane.add(priority); // adding the label
+
+		SpinnerModel model = new SpinnerNumberModel();
+		priorityPicker = new JSpinner(model);
+		pane.add(priorityPicker);
+
+		// create a button to save the task
+		JButton saveButton = new JButton("Save");
+		pane.add(saveButton); // adding the button
 
 		// add an action to the save button
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainController.getInstance().saveTaskClicked(adv);
+
+				editTask();
+				// MainController.getInstance().ReloadGui();
+
 			}
 		});
 
@@ -173,15 +312,16 @@ public class AddTaskView implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
+	private void editTask() {
 
-		SwingUtilities.invokeLater(new Runnable() {
+		TaskList newList = TaskList.getInstance();
+		DateTime now = DateTime.now();
+		newList.addTask(taskName, taskCategory, now, now, false, false,
+				taskPriority, "", now, now, 0);
+		System.out.println("New task added");
+		MainController newController = MainController.getInstance();
+		newController.ReloadGui();
 
-			public void run() {
-				AddTaskView a = new AddTaskView();
-
-			}
-		});
 	}
 
 	@Override
@@ -189,5 +329,4 @@ public class AddTaskView implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-
 }
