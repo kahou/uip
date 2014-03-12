@@ -26,7 +26,9 @@ class MenuAction extends AbstractAction {
        Object type = getValue(MNEMONIC_KEY);
        if(type.equals(1)){ controller.setNewLanguage("en", "US"); controller.SaveConfig(); controller.ReloadGui();}
        else if(type.equals(2)){ controller.setNewLanguage("sv", "SE"); controller.SaveConfig(); controller.ReloadGui();}
-       else if(type.equals(3)){ controller.setNewLanguage("zh", "CN"); controller.SaveConfig(); controller.ReloadGui();} 
+       else if(type.equals(3)){ controller.setNewLanguage("zh", "CN"); controller.SaveConfig(); controller.ReloadGui();}
+       else if(type.equals(9)){ controller.initLookAndFeel("Metal", "Default"); controller.ReloadGui();}
+       else if(type.equals(10)){ controller.initLookAndFeel("System", "Default"); controller.ReloadGui();}
        
     }
     
