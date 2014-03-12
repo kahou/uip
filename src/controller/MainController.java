@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,8 +37,8 @@ public class MainController {
 	private String country = "US";
 	private static MainLayout mainLayout;
 	
-	private String lAndF = null;
-	private String theme = null;
+	private String lAndF = "Default";
+	private String theme = "Default";
 
 
 	private TaskList taskList = TaskList.getInstance();
@@ -56,17 +55,11 @@ public class MainController {
 		return instance;
 	}
 	/*
-	 * This is the main for the program.
+	 * This is the MainController for the program.
 	 */
 	public static void main(String[] args) {
+
 		mainLayout = new MainLayout();
-		/*SwingUtilities.invokeLater(new Runnable() {
-
-			public void run() {
-				MainLayout layout = new MainLayout();
-
-			}
-		});*/
 	}
 
 	/**
@@ -83,7 +76,7 @@ public class MainController {
 
 	/**
 	 * Load tasks from db and show in the tasklistview
-	 * @param tasklistview
+	 * @param tlview
 	 */
 	public void loadandshowTaskList(TaskListView tlview) {
 		//Get tasklist
@@ -176,7 +169,7 @@ public class MainController {
 			this.inlineTop = Integer.parseInt(props.getProperty("inlineTop"));
 			this.language = props.getProperty("language");
 			this.country = props.getProperty("country");
-			this.lAndF = props.getProperty("lookandfeel");
+			this.lAndF = props.getProperty("laf");
 			this.theme = props.getProperty("theme");
 			reader.close();
 		} catch (FileNotFoundException ex) {
@@ -200,7 +193,7 @@ public class MainController {
 				props.setProperty("inlineTop", Integer.toString(this.inlineTop));
 				props.setProperty("inlineLeft", Integer.toString(this.inlineLeft));
 				props.setProperty("language", language);
-				props.setProperty("lookandfeel", lAndF);
+				props.setProperty("laf", lAndF);
 				props.setProperty("theme", theme);
 				props.setProperty("country", country);
 				props.store(out, "");
@@ -241,10 +234,10 @@ public class MainController {
 		
 		
 		public void initLookAndFeel(String landf, String theme) {
-			String lookAndFeel = null;
+			String lookAndFeel;
 			
 			if (theme == null) {
-				theme = "Default";
+				this.theme = "Default";
 			}
 			
 			this.lAndF = landf;
@@ -303,7 +296,6 @@ public class MainController {
 					e.printStackTrace();
 				}
 			}
-			
-			
+
 		}
 }

@@ -61,7 +61,7 @@ public class XmlManager {
 
 	/**
 	 * Create and write a task element in XML file 
-	 * @param task
+	 * @param t
 	 * @return taskid
 	 */
 	public int newtask(Task t) {
@@ -266,6 +266,7 @@ public class XmlManager {
         for ( Iterator i = root.elementIterator(); i.hasNext(); ) {
             Element task = (Element) i.next();
             int taskid = Integer.parseInt(task.attributeValue("taskid"));
+            System.out.println(taskid);
             taskList.add(this.readTask(taskid));
         }
         

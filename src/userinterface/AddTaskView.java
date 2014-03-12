@@ -1,10 +1,6 @@
 package userinterface;
 
-import storage.Task;
-
 import javax.swing.*;
-
-import org.joda.time.DateTime;
 
 import com.toedter.calendar.JDateChooser;
 
